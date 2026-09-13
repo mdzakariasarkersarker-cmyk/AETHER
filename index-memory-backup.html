@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dragon AI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+font-family:Arial,sans-serif;
+background:#08090d;
+color:#fff;
+}
+
+.app{
+width:100%;
+max-width:900px;
+margin:auto;
+padding:18px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:8px 0 25px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+font-size:20px;
+}
+
+.dragon{font-size:32px}
+
+.logo small{
+font-size:10px;
+letter-spacing:2px;
+color:#999;
+}
+
+.badge{
+border:1px solid #30343d;
+padding:7px 12px;
+border-radius:20px;
+font-size:11px;
+color:#aaa;
+}
+
+.chat{
+min-height:65vh;
+padding:20px 0;
+}
+
+.welcome{
+text-align:center;
+padding:70px 10px 35px;
+}
+
+.welcome h1{
+font-size:clamp(40px,9vw,70px);
+margin:0;
+letter-spacing:-3px;
+}
+
+.welcome h1 span{
+color:#ff3b30;
+}
+
+.welcome p{
+color:#92959f;
+font-size:17px;
+}
+
+.message{
+margin:18px 0;
+padding:16px 18px;
+border-radius:18px;
+line-height:1.6;
+white-space:normal;
+}
+
+.user{
+background:#1b1e25;
+margin-left:12%;
+}
+
+.ai{
+background:#111318;
+border:1px solid #292d35;
+margin-right:5%;
+}
+
+.input-box{
+position:sticky;
+bottom:12px;
+background:#111318;
+border:1px solid #30343d;
+border-radius:22px;
+padding:12px;
+box-shadow:0 15px 45px #000;
+}
+
+textarea{
+width:100%;
+min-height:80px;
+max-height:200px;
+resize:none;
+border:0;
+outline:0;
+background:transparent;
+color:white;
+font-size:17px;
+padding:10px;
+}
+
+textarea::placeholder{
+color:#686b74;
+}
+
+.actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:5px;
+}
+
+.tool{
+background:#20242b;
+color:#ddd;
+border:1px solid #30343d;
+padding:10px 14px;
+border-radius:12px;
+}
+
+.solve{
+background:#ff3b30;
+color:white;
+border:0;
+padding:11px 18px;
+border-radius:13px;
+font-weight:bold;
+}
+
+.status{
+text-align:center;
+color:#666;
+font-size:12px;
+margin-top:10px;
+}
+
+@media(max-width:600px){
+.app{padding:12px}
+.user{margin-left:4%}
+.ai{margin-right:0}
+.welcome{padding-top:45px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+<div class="logo">
+<div class="dragon">🐉</div>
+<div>DRAGON<br><small>MATH AI</small></div>
+</div>
+
+<div class="badge">AI MATH SOLVER</div>
+</div>
+
+<div class="chat" id="chat">
+
+<div class="welcome" id="welcome">
+<h1>How can <span>I help?</span></h1>
+<p>Your intelligent mathematics workspace.</p>
+</div>
+
+</div>
+
+<div class="input-box">
+
+<textarea id="question"
+placeholder="Message Dragon AI..."></textarea>
+
+<div class="actions">
+
+<button class="tool">📷 Image</button>
+
+<button class="solve" onclick="solve()">
+✨ Solve
+</button>
+
+</div>
+</div>
+
+<div class="status">
+Dragon AI • Ready
+</div>
+
+</div>
+
+<script>
+async function solve(){
+
+const q=document.getElementById("question").value.trim();
+
+if(!q)return;
+
+const chat=document.getElementById("chat");
+const welcome=document.getElementById("welcome");
+
+if(welcome) welcome.remove();
+
+const user=document.createElement("div");
+user.className="message user";
+user.innerHTML="<b>You</b><br>"+escapeHTML(q);
+chat.appendChild(user);
+
+const ai=document.createElement("div");
+ai.className="message ai";
+ai.innerHTML="<b>🐉 Dragon</b><br><br>🧠 Analyzing...";
+chat.appendChild(ai);
+
+document.getElementById("question").value="";
+
+try{
+
+const r=await fetch("http://localhost:3001/solve",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({messages:[{role:"user",content:q}]})
+});
+
+const d=await r.json();
+
+if(!r.ok)throw new Error(d.error||"AI solver error");
+
+ai.innerHTML="<b>🐉 Dragon</b><br><br>"+
+escapeHTML(d.answer).replace(/\n/g,"<br>");
+
+}catch(e){
+
+ai.innerHTML="<b>🐉 Dragon</b><br><br>❌ "+escapeHTML(e.message);
+
+}
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+function escapeHTML(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+document.getElementById("question").addEventListener("keydown",function(e){
+
+if(e.key==="Enter" && !e.shiftKey){
+
+e.preventDefault();
+solve();
+
+}
+
+});
+</script>
+
+</body>
+</html>

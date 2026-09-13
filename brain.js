@@ -1,0 +1,107 @@
+function detectBrain(question) {
+  const q = question.toLowerCase();
+
+  if (/solve|equation|calculate|math|যোগ|বিয়োগ|গুণ|ভাগ|সমীকরণ|ত্রিভুজ|বৃত্ত/.test(q)) {
+  if (/[!]|sin|cos|tan|log|ln|sqrt|√|^|²/.test(q)) return "math";
+    return "math";
+  }
+
+  if (/ssc|class 10|পদার্থ|রসায়ন|বাংলা|ইংরেজি|chapter|অধ্যায়/.test(q)) {
+    return "ssc";
+  }
+
+  if (/why|কেন|যুক্তি|logic|reason|কারণ|explain/.test(q)) {
+    return "reasoning";
+  }
+
+  if (/image|photo|ছবি|চিত্র|camera/.test(q)) {
+    return "vision";
+  }
+
+  return "chat";
+}
+
+module.exports = { detectBrain };
+
+function solveMath(question) {
+  const q = question.trim();
+
+  if (/^[0-9+*/().% -]+$/.test(q)) {
+    try {
+      const answer = Function('"use strict"; return (' + q + ')')();
+      if (Number.isFinite(answer)) return String(answer);
+    } catch (e) {}
+  }
+
+  const percent = q.match(/^([0-9.]+)%\s+of\s+([0-9.]+)$/i);
+  if (percent) {
+    return String((Number(percent[1]) / 100) * Number(percent[2]));
+  }
+
+  return null;
+}
+
+module.exports.solveMath = solveMath;
+
+function solvePercentage(question) {
+  const q = question.trim();
+
+  let m = q.match(/^([0-9.]+)%\s+of\s+([0-9.]+)$/i);
+  if (m) return String((Number(m[1]) / 100) * Number(m[2]));
+
+  m = q.match(/^([0-9.]+)\s*percent\s+of\s+([0-9.]+)$/i);
+  if (m) return String((Number(m[1]) / 100) * Number(m[2]));
+
+  m = q.match(/^([0-9.]+)\s*এর\s*([0-9.]+)%$/);
+  if (m) return String((Number(m[2]) / 100) * Number(m[1]));
+
+  return null;
+}
+
+module.exports.solvePercentage = solvePercentage;
+
+function solveAdvancedCalculator(question) {
+  let q = question.trim().toLowerCase();
+  q = q.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-");
+  q = q.replace(/√\s*\(([^)]+)\)/g, "sqrt($1)");
+  q = q.replace(/√\s*([0-9.]+)/g, "sqrt($1)");
+  q = q.replace(/²/g, "^2");
+
+  try {
+    const math = require("mathjs");
+    q = q.replace(/π/g, "pi").replace(/°/g, " deg");
+  q = q.replace(/\bln\s*\(([^)]+)\)/g, "(log($1)/log(e))");
+  q = q.replace(/log([₀₁₂₃₄₅₆₇₈₉]+)\s*\(([^)]+)\)/g, (_, b, x) => "(log(" + x + ")/log(" + b.replace(/₀/g,"0").replace(/₁/g,"1").replace(/₂/g,"2").replace(/₃/g,"3").replace(/₄/g,"4").replace(/₅/g,"5").replace(/₆/g,"6").replace(/₇/g,"7").replace(/₈/g,"8").replace(/₉/g,"9") + "))");
+  q = q.replace(/\blog\s*\(/g, "log10("); q = q.replace(/sin\(([^)]+) deg\)/g, "sin(($1)*pi/180)").replace(/cos\(([^)]+) deg\)/g, "cos(($1)*pi/180)").replace(/tan\(([^)]+) deg\)/g, "tan(($1)*pi/180)"); const result = math.evaluate(q);
+    if (typeof result === "number" && Number.isFinite(result)) return String(Number(result.toPrecision(12)));
+  } catch (e) {}
+
+  return null;
+}
+
+module.exports.solveAdvancedCalculator = solveAdvancedCalculator;
+
+
+function solveLinearEquation(question) {
+  let q = question.trim().replace(/\s+/g, "");
+  let m = q.match(/^([+-]?\d*\.?\d*)x(?:([+-]\d*\.?\d*))?=([+-]?\d*\.?\d+)$/i);
+  if (!m) return null;
+
+  let a = m[1];
+  let b = m[2] || "0";
+  let c = m[3];
+
+  if (a === "" || a === "+") a = 1;
+  else if (a === "-") a = -1;
+  else a = Number(a);
+
+  b = b === "" || b === "+" || b === "-" ? Number(b + "0") : Number(b);
+  c = Number(c);
+
+  if (!Number.isFinite(a) || a === 0 || !Number.isFinite(b) || !Number.isFinite(c)) return null;
+
+  const x = (c - b) / a;
+  return "x = " + String(Number(x.toPrecision(12)));
+}
+
+module.exports.solveLinearEquation = solveLinearEquation;

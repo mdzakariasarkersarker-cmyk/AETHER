@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dragon Math AI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  background:#08090d;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+}
+
+.app{
+  width:100%;
+  max-width:900px;
+  padding:25px 18px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:70px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.dragon{
+  font-size:34px;
+}
+
+.badge{
+  font-size:12px;
+  padding:7px 12px;
+  border:1px solid #30343d;
+  border-radius:20px;
+  color:#aaa;
+}
+
+.hero{
+  text-align:center;
+}
+
+.hero h1{
+  font-size:clamp(42px,8vw,76px);
+  margin:0;
+  letter-spacing:-3px;
+}
+
+.hero h1 span{
+  color:#ff3b30;
+}
+
+.hero p{
+  color:#9b9da5;
+  font-size:18px;
+  margin:18px 0 35px;
+}
+
+.workspace{
+  background:#111318;
+  border:1px solid #292d35;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 20px 60px #000;
+}
+
+textarea{
+  width:100%;
+  min-height:150px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:#171a20;
+  color:white;
+  border-radius:16px;
+  padding:20px;
+  font-size:18px;
+}
+
+textarea::placeholder{
+  color:#686b74;
+}
+
+.tools{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:15px;
+}
+
+.tool{
+  background:#20242b;
+  color:#ddd;
+  border:1px solid #30343d;
+  padding:11px 15px;
+  border-radius:12px;
+}
+
+.solve{
+  background:#ff3b30;
+  color:white;
+  border:0;
+  padding:13px 22px;
+  border-radius:13px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.answer{
+  display:none;
+  margin-top:18px;
+  padding:20px;
+  background:#171a20;
+  border-radius:16px;
+  color:#ddd;
+}
+
+.section{
+  margin-top:35px;
+  color:#777b85;
+  font-size:14px;
+}
+
+.history{
+  margin-top:12px;
+  padding:17px;
+  background:#111318;
+  border:1px solid #292d35;
+  border-radius:16px;
+  color:#aaa;
+}
+
+@media(max-width:600px){
+  .header{margin-bottom:55px}
+  .hero h1{letter-spacing:-2px}
+  .tools{gap:10px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">
+      <div class="dragon">🐉</div>
+      <div>DRAGON<br><small>MATH AI</small></div>
+    </div>
+
+    <div class="badge">AI MATH SOLVER</div>
+  </div>
+
+  <div class="hero">
+    <h1>Solve <span>anything.</span></h1>
+    <p>Your intelligent mathematics workspace.</p>
+
+    <div class="workspace">
+
+      <textarea id="question"
+      placeholder="Type your math problem here...&#10;&#10;Example: Solve 2x + 5 = 17"></textarea>
+
+      <div class="tools">
+        <button class="tool">📷 Image</button>
+
+        <button class="solve" onclick="solve()">
+          ✨ Solve Problem
+        </button>
+      </div>
+
+      <div class="answer" id="answer"></div>
+
+    </div>
+  </div>
+
+  <div class="section">RECENT PROBLEMS</div>
+
+  <div class="history">
+    🧮 Your solved problems will appear here.
+  </div>
+
+</div>
+
+<script>
+async function solve(){
+  const q=document.getElementById("question").value.trim();
+  const a=document.getElementById("answer");
+  a.style.display="block";
+  a.innerHTML="<b>🧠 Dragon is analyzing...</b>";
+  try {
+    const r=await fetch("http://localhost:3001/solve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({problem:q})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    a.innerHTML="<b>✅ Solution</b><br><br>"+d.answer.replace(/\n/g,"<br>");
+  } catch(e) {
+    a.innerHTML="❌ "+e.message;
+  }
+}
+</script>
+
+</body>
+</html>
