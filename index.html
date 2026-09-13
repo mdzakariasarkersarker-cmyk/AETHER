@@ -244,7 +244,7 @@ document.getElementById("question").value="";
 
 try{
 
-const r=await fetch("http://localhost:3001/solve",{
+const r=await fetch("/solve",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({messages:chatHistory,image:selectedImage || null})

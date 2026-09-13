@@ -4,6 +4,7 @@ const { chatReply } = require("./chatBrain");
 const { searchKnowledge } = require("./knowledgeBrain");
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
 
 const Groq = require("groq-sdk");
@@ -14,6 +15,12 @@ const ai = new GoogleGenAI({
 });
 
 app.use(express.json({limit:"10mb"}));
+
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -119,6 +126,8 @@ app.post("/solve", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Dragon AI Server running on port 3001");
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Dragon AI Server running on port ${PORT}`);
 });
