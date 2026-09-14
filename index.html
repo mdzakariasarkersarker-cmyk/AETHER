@@ -8,209 +8,1076 @@
 <style>
 *{box-sizing:border-box}
 
+:root{
+  --bg:#08090d;
+  --panel:#11131a;
+  --panel2:#171a23;
+  --border:rgba(255,255,255,.09);
+  --text:#f5f7fb;
+  --muted:#8f96a6;
+  --accent:#8b5cf6;
+  --accent2:#6366f1;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+
 body{
-margin:0;
-min-height:100vh;
-font-family:Arial,sans-serif;
-background:#08090d;
-color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
 .app{
-width:100%;
-max-width:900px;
-margin:auto;
-padding:18px;
+  width:100%;
+  max-width:1100px;
+  min-height:100vh;
+  margin:auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
 }
 
 .header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:8px 0 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 4px 28px;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:bold;
-font-size:20px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:800;
+  font-size:21px;
+  letter-spacing:.3px;
 }
 
-.dragon{font-size:32px}
-
-.logo small{
-font-size:10px;
-letter-spacing:2px;
-color:#999;
+.logo span{
+  color:#a78bfa;
 }
 
-.badge{
-border:1px solid #30343d;
-padding:7px 12px;
-border-radius:20px;
-font-size:11px;
-color:#aaa;
+.header-badge{
+  padding:7px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(255,255,255,.04);
+  color:#aeb4c2;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.7px;
 }
 
-.chat{
-min-height:65vh;
-padding:20px 0;
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  width:100%;
 }
 
 .welcome{
-text-align:center;
-padding:70px 10px 35px;
+  text-align:center;
+  margin:35px auto 32px;
 }
 
 .welcome h1{
-font-size:clamp(40px,9vw,70px);
-margin:0;
-letter-spacing:-3px;
-}
-
-.welcome h1 span{
-color:#ff3b30;
+  margin:0;
+  font-size:clamp(34px,6vw,58px);
+  line-height:1.05;
+  letter-spacing:-2px;
+  background:linear-gradient(90deg,#fff,#b8b4ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .welcome p{
-color:#92959f;
-font-size:17px;
+  margin:14px 0 0;
+  color:var(--muted);
+  font-size:15px;
+}
+
+.chat{
+  width:100%;
+  max-width:900px;
+  margin:auto;
 }
 
 .message{
-margin:18px 0;
-padding:16px 18px;
-border-radius:18px;
-line-height:1.6;
-white-space:normal;
+  margin:14px 0;
+  padding:15px 18px;
+  border-radius:18px;
+  line-height:1.6;
+  animation:fadeUp .25s ease;
 }
 
-.user{
-background:#1b1e25;
-margin-left:12%;
+.user-message{
+  margin-left:auto;
+  max-width:80%;
+  background:linear-gradient(135deg,#27233d,#211e32);
+  border:1px solid rgba(139,92,246,.2);
 }
 
-.ai{
-background:#111318;
-border:1px solid #292d35;
-margin-right:5%;
+.ai-message{
+  max-width:90%;
+  background:var(--panel);
+  border:1px solid var(--border);
 }
 
 .input-box{
-position:sticky;
-bottom:12px;
-background:#111318;
-border:1px solid #30343d;
-border-radius:22px;
-padding:12px;
-box-shadow:0 15px 45px #000;
+  position:relative;
+  width:100%;
+  margin:24px auto 8px;
+  padding:10px;
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  background:rgba(17,19,26,.94);
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:22px;
+  box-shadow:0 15px 50px rgba(0,0,0,.35);
+  backdrop-filter:blur(18px);
 }
 
 textarea{
-width:100%;
-min-height:80px;
-max-height:200px;
-resize:none;
-border:0;
-outline:0;
-background:transparent;
-color:white;
-font-size:17px;
-padding:10px;
+  flex:1;
+  min-height:48px;
+  max-height:160px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  padding:13px 8px;
+  font:inherit;
+  line-height:1.4;
 }
 
 textarea::placeholder{
-color:#686b74;
-}
-
-.actions{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:5px;
+  color:#6f7685;
 }
 
 .tool{
-background:#20242b;
-color:#ddd;
-border:1px solid #30343d;
-padding:10px 14px;
-border-radius:12px;
+  width:44px;
+  height:44px;
+  flex:none;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#191c25;
+  color:#dfe2ea;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.solve{
-background:#ff3b30;
-color:white;
-border:0;
-padding:11px 18px;
-border-radius:13px;
-font-weight:bold;
+.tool:hover{
+  background:#232735;
+  transform:translateY(-1px);
 }
 
-.status{
-text-align:center;
-color:#666;
-font-size:12px;
-margin-top:10px;
+.solve-btn{
+  height:44px;
+  padding:0 18px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(99,102,241,.25);
+  transition:.2s;
+}
+
+.solve-btn:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+
+.attach-menu{
+  position:absolute;
+  bottom:65px;
+  left:10px;
+  width:190px;
+  padding:8px;
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  background:#151820;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 18px 45px rgba(0,0,0,.45);
+  z-index:20;
+}
+
+.attach-menu.show{
+  display:flex;
+  animation:menuIn .18s ease;
+}
+
+.attach-menu button{
+  border:0;
+  background:transparent;
+  color:#e8eaf0;
+  padding:11px 12px;
+  text-align:left;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.attach-menu button:hover{
+  background:#222632;
+}
+
+.thinking{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#9299aa;
+  font-size:14px;
+  padding:10px 4px;
+}
+
+.dots{
+  display:flex;
+  gap:4px;
+}
+
+.dots i{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#a78bfa;
+  animation:dot 1s infinite;
+}
+
+.dots i:nth-child(2){animation-delay:.15s}
+.dots i:nth-child(3){animation-delay:.3s}
+
+#dragonFly{
+  position:fixed;
+  left:-100px;
+  top:28%;
+  z-index:999;
+  font-size:58px;
+  pointer-events:none;
+  opacity:0;
+}
+
+#dragonFly.fly{
+  animation:dragonFlight 1.8s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes dragonFlight{
+  0%{transform:translate(0,40px) rotate(-8deg) scale(.75);opacity:0}
+  12%{opacity:1}
+  50%{transform:translate(55vw,-30px) rotate(3deg) scale(1.08);opacity:1}
+  100%{transform:translate(115vw,25px) rotate(8deg) scale(.8);opacity:0}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes menuIn{
+  from{opacity:0;transform:translateY(8px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes dot{
+  0%,70%,100%{opacity:.3;transform:translateY(0)}
+  35%{opacity:1;transform:translateY(-3px)}
 }
 
 @media(max-width:600px){
-.app{padding:12px}
-.user{margin-left:4%}
-.ai{margin-right:0}
-.welcome{padding-top:45px}
+  .app{padding:14px}
+  .header{padding-bottom:18px}
+  .header-badge{display:none}
+  .welcome{margin:30px auto 24px}
+  .welcome h1{font-size:40px}
+  .welcome p{font-size:14px}
+  .input-box{border-radius:18px}
+  .solve-btn{padding:0 13px}
+  .user-message,.ai-message{max-width:94%}
+}
+
+
+.settings-panel{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(12px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+}
+.settings-panel.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.settings-card{
+  width:min(92%,460px);
+  background:linear-gradient(145deg,#171a23,#101219);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 30px 90px rgba(0,0,0,.6);
+}
+.settings-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
+.settings-head h2{
+  margin:0;
+  font-size:24px;
+}
+.settings-head p{
+  margin:6px 0 0;
+  color:#8f96a6;
+  font-size:13px;
+}
+.settings-head button{
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:12px;
+  background:#222631;
+  color:#fff;
+  font-size:25px;
+  cursor:pointer;
+}
+.setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:17px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.setting-row strong{
+  display:block;
+  font-size:15px;
+}
+.setting-row small{
+  display:block;
+  margin-top:5px;
+  color:#858c9c;
+  font-size:12px;
+}
+.setting-status{
+  font-size:10px;
+  letter-spacing:1px;
+  color:#7dd3fc;
+}
+.clear-history-btn{
+  width:100%;
+  margin-top:22px;
+  padding:13px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:13px;
+  background:#20232d;
+  color:#fff;
+  cursor:pointer;
+}
+.clear-history-btn:hover{
+  background:#292d38;
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+.dragon-logo{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  border-radius:13px;
+  background:linear-gradient(145deg,#211b3b,#151722);
+  border:1px solid rgba(167,139,250,.28);
+  box-shadow:0 0 25px rgba(139,92,246,.18);
+}
+
+.brand{
+  display:flex;
+  align-items:baseline;
+  gap:5px;
+  letter-spacing:1px;
+}
+
+.brand strong{
+  font-size:17px;
+}
+
+.brand span{
+  color:#a78bfa;
+  font-size:17px;
+  font-weight:800;
+}
+
+.live-dot,.status-dot{
+  width:7px;
+  height:7px;
+  display:inline-block;
+  border-radius:50%;
+  background:#7c3aed;
+  box-shadow:0 0 10px rgba(124,58,237,.8);
+}
+
+.header-badge{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.welcome-dragon{
+  font-size:58px;
+  margin-bottom:16px;
+  filter:drop-shadow(0 0 18px rgba(139,92,246,.35));
+  animation:dragonIdle 2.8s ease-in-out infinite;
+}
+
+@keyframes dragonIdle{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-7px) rotate(2deg)}
+}
+
+.quick-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:25px;
+}
+
+.quick-actions button{
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);
+  color:#bfc4d0;
+  padding:9px 14px;
+  border-radius:999px;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.quick-actions button:hover{
+  background:rgba(139,92,246,.12);
+  border-color:rgba(139,92,246,.3);
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+.composer-wrap{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.input-box{
+  min-height:70px;
+}
+
+.attach-wrap{
+  position:relative;
+  flex:none;
+}
+
+.tool{
+  font-size:25px;
+  font-weight:300;
+}
+
+.attach-menu{
+  bottom:62px;
+  left:0;
+}
+
+.attach-menu button{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:13px;
+}
+
+.attach-menu button span{
+  color:#e7e9ef;
+}
+
+.composer-hint{
+  text-align:center;
+  color:#5f6675;
+  font-size:10px;
+  margin-top:9px;
+}
+
+.status{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  color:#666d7c;
+  font-size:11px;
+  padding:17px 0 4px;
+}
+
+@media(max-width:600px){
+  .app{padding:12px}
+  .header{padding:8px 2px 20px}
+  .brand strong,.brand span{font-size:15px}
+  .dragon-logo{width:38px;height:38px;font-size:22px}
+  .welcome-dragon{font-size:48px}
+  .quick-actions{gap:7px}
+  .quick-actions button{padding:8px 11px}
+  .input-box{padding:8px;min-height:62px}
+  .solve-btn{height:42px;padding:0 12px}
+}
+</style>
+
+
+<style>
+.menu-btn{
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:100;
+  width:42px;
+  height:42px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  background:rgba(17,19,26,.88);
+  color:#e8eaf0;
+  font-size:19px;
+  cursor:pointer;
+  backdrop-filter:blur(14px);
+  transition:.2s;
+}
+
+.menu-btn:hover{
+  background:#20232d;
+  transform:scale(1.04);
+}
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:285px;
+  z-index:1000;
+  padding:18px 14px;
+  display:flex;
+  flex-direction:column;
+  background:rgba(12,14,20,.97);
+  border-right:1px solid rgba(255,255,255,.08);
+  box-shadow:20px 0 60px rgba(0,0,0,.35);
+  backdrop-filter:blur(24px);
+  transform:translateX(-105%);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1);
+}
+
+.sidebar.open{
+  transform:translateX(0);
+}
+
+.sidebar-overlay{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(2px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.sidebar-overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.sidebar-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.side-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.side-dragon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#191525;
+  border:1px solid rgba(139,92,246,.22);
+  font-size:23px;
+}
+
+.side-brand strong{
+  display:block;
+  font-size:14px;
+}
+
+.side-brand small{
+  display:block;
+  margin-top:3px;
+  color:#707788;
+  font-size:10px;
+}
+
+.close-sidebar{
+  border:0;
+  background:transparent;
+  color:#858b9a;
+  font-size:27px;
+  cursor:pointer;
+}
+
+.new-chat-btn{
+  width:100%;
+  height:46px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:0 14px;
+  border:1px solid rgba(139,92,246,.25);
+  border-radius:13px;
+  background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(99,102,241,.10));
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.new-chat-btn span{
+  font-size:20px;
+}
+
+.side-search{
+  height:40px;
+  margin:13px 0 18px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 11px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:11px;
+  background:#151820;
+}
+
+.side-search span{
+  color:#777f90;
+  font-size:18px;
+}
+
+.side-search input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font-size:12px;
+}
+
+.side-search input::placeholder{
+  color:#666d7b;
+}
+
+.history-title{
+  padding:0 9px 8px;
+  color:#626979;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.2px;
+}
+
+.history-list{
+  flex:1;
+  overflow-y:auto;
+}
+
+.empty-history{
+  padding:12px 9px;
+  color:#626979;
+  font-size:12px;
+}
+
+.history-item{
+  padding:10px 11px;
+  margin-bottom:3px;
+  border-radius:10px;
+  color:#c5cad5;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+
+.history-item:hover{
+  background:#191c25;
+  color:#fff;
+}
+
+.sidebar-bottom{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:10px;
+}
+
+.side-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:#c8cdd7;
+  text-align:left;
+  cursor:pointer;
+}
+
+.side-item:hover{
+  background:#191c25;
+}
+
+.side-profile{
+  margin-top:5px;
+  padding:10px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border-radius:12px;
+  background:#151820;
+}
+
+.profile-icon{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:#211b35;
+}
+
+.side-profile strong{
+  display:block;
+  font-size:11px;
+}
+
+.side-profile small{
+  color:#707788;
+  font-size:9px;
+}
+
+.more{
+  margin-left:auto;
+  color:#697080;
+}
+
+@media(max-width:600px){
+  .sidebar{
+    width:82%;
+    max-width:300px;
+  }
+
+  .menu-btn{
+    top:12px;
+    left:12px;
+  }
+
+  .header{
+    padding-left:52px;
+  }
+}
+</style>
+
 </head>
 
 <body>
 
+<div id="dragonFly">🐉</div>
+
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="side-brand">
+      <div class="side-dragon">🐉</div>
+      <div>
+        <strong>Dragon AI</strong>
+        <small>Your AI workspace</small>
+      </div>
+    </div>
+
+    <button class="close-sidebar" onclick="toggleSidebar()">×</button>
+  </div>
+
+  <button class="new-chat-btn" onclick="newChat()">
+    <span>＋</span> New chat
+  </button>
+
+  <div class="side-search">
+    <span>⌕</span>
+    <input id="historySearch" placeholder="Search chats..." oninput="filterHistory()">
+  </div>
+
+  <div class="history-title">RECENT</div>
+  <div class="history-list" id="historyList">
+    <div class="empty-history">No conversations yet</div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <button class="side-item" onclick="openSettings()">
+      <span>⚙️</span> Settings
+    </button>
+
+    <div class="side-profile">
+      <div class="profile-icon">🐉</div>
+      <div>
+        <strong>Dragon AI</strong>
+        <small>AI Assistant</small>
+      </div>
+      <span class="more">•••</span>
+    </div>
+  </div>
+</aside>
+
+<div id="settingsPanel" class="settings-panel">
+  <div class="settings-card">
+    <div class="settings-head">
+      <div>
+        <h2>Settings</h2>
+        <p>Customize your Dragon AI</p>
+      </div>
+      <button onclick="closeSettings()">×</button>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Dragon AI</strong>
+        <small>Personal AI assistant</small>
+      </div>
+      <span class="setting-status">ONLINE</span>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Theme</strong>
+        <small>Premium dark interface</small>
+      </div>
+      <span>🌙</span>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Chat History</strong>
+        <small>Keep your conversations</small>
+      </div>
+      <span>✓</span>
+    </div>
+
+    <button class="clear-history-btn" onclick="newChat();closeSettings();">
+      Clear current chat
+    </button>
+  </div>
+</div>
+
 <div class="app">
 
-<div class="header">
-<div class="logo">
-<div class="dragon">🐉</div>
-<div>DRAGON<br><small>MATH AI</small></div>
-</div>
+  <header class="header">
+    <button class="menu-btn" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+    <div class="logo">
+      <div class="dragon-logo">🐉</div>
+      <div class="brand">
+        <strong>DRAGON</strong>
+        <span>AI</span>
+      </div>
+    </div>
 
-<div class="badge">AI MATH SOLVER</div>
-</div>
+    <div class="header-badge">
+      <span class="live-dot"></span>
+      ONLINE
+    </div>
+  </header>
 
-<div class="chat" id="chat">
+  <main class="main">
 
-<div class="welcome" id="welcome">
-<h1>How can <span>I help?</span></h1>
-<p>Your intelligent mathematics workspace.</p>
-</div>
+    <section class="welcome" id="welcome">
+      <div class="welcome-dragon">🐉</div>
+      <h1>How can <span>I help?</span></h1>
+      <p>Ask anything. Solve anything. <b>Powered by Dragon.</b></p>
 
-</div>
+      <div class="quick-actions">
+        <button onclick="document.getElementById('question').value='Solve this math problem: '">∑ Math</button>
+        <button onclick="document.getElementById('question').value='Explain this concept: '">✦ Explain</button>
+        <button onclick="document.getElementById('question').value='Search for information about '">⌕ Search</button>
+      </div>
+    </section>
 
-<div class="input-box">
+    <section class="chat" id="chat"></section>
 
-<textarea id="question"
-placeholder="Message Dragon AI..."></textarea>
+    <div class="composer-wrap">
 
-<div class="actions">
+      <div class="input-box">
 
-<div class="attach-wrap"><input type="file" id="cameraInput" accept="image/*" capture="environment" hidden><input type="file" id="photoInput" accept="image/*" hidden><input type="file" id="fileInput" hidden><button class="tool" onclick="document.getElementById('attachMenu').style.display=document.getElementById('attachMenu').style.display==='none'?'flex':'none'">＋</button><div id="attachMenu" style="display:none;position:absolute;bottom:60px;left:0;background:#202123;border:1px solid #444;border-radius:14px;padding:8px;flex-direction:column;gap:6px;z-index:999"><button onclick="document.getElementById('cameraInput').click()">📷 Camera</button><button onclick="document.getElementById('photoInput').click()">🖼️ Photos</button><button onclick="document.getElementById('fileInput').click()">📁 Files</button><button onclick="alert('Plugins coming soon')">🔌 Plugins</button><button onclick="alert('Think harder mode coming soon')">🧠 Think harder</button></div></div>
+        <div class="attach-wrap">
+          <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+          <input type="file" id="photoInput" accept="image/*" hidden>
+          <input type="file" id="fileInput" hidden>
 
-<button class="solve" onclick="solve()">
-✨ Solve
-</button>
+          <button class="tool" type="button"
+            onclick="document.getElementById('attachMenu').classList.toggle('show')">
+            +
+          </button>
 
-</div>
-</div>
+          <div id="attachMenu" class="attach-menu">
+            <button type="button" onclick="document.getElementById('cameraInput').click()">📷 <span>Camera</span></button>
+            <button type="button" onclick="document.getElementById('photoInput').click()">🖼️ <span>Photos</span></button>
+            <button type="button" onclick="document.getElementById('fileInput').click()">📁 <span>Files</span></button>
+            <button type="button" onclick="alert('Plugins coming soon')">🔌 <span>Plugins</span></button>
+            <button type="button" onclick="alert('Think harder mode coming soon')">🧠 <span>Think harder</span></button>
+          </div>
+        </div>
 
-<div class="status">
-Dragon AI • Ready
-</div>
+        <textarea id="question" placeholder="Message Dragon AI..." rows="1"></textarea>
+
+        <button class="solve-btn" type="button" onclick="solve()">
+          <span>✦</span> Solve
+        </button>
+
+      </div>
+
+      <div class="composer-hint">
+        Dragon AI can make mistakes. Check important answers.
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="status">
+    <span class="status-dot"></span>
+    Dragon AI · Ready
+  </div>
 
 </div>
 
 <script>
+function saveCurrentConversation(){
+  if(!chatHistory.length) return;
+
+  const firstUser=chatHistory.find(x=>x.role==="user");
+  const title=firstUser ? firstUser.content.slice(0,45) : "New conversation";
+
+  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+
+  history.push({
+    title:title,
+    html:document.getElementById("chat")?.innerHTML || "",
+    time:Date.now()
+  });
+
+  localStorage.setItem("dragonHistory",JSON.stringify(history.slice(-30)));
+  renderDragonHistory();
+}
+
+function saveDragonHistory(){
+  localStorage.setItem("dragonHistory", JSON.stringify(chatHistory));
+  renderDragonHistory();
+}
+
+function renderDragonHistory(){
+  const list=document.getElementById("historyList");
+  if(!list) return;
+
+  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+
+  if(!history.length){
+    list.innerHTML='<div class="empty-history">No conversations yet</div>';
+    return;
+  }
+
+  list.innerHTML=history.slice().reverse().map((item,index)=>`
+    <div class="history-item" onclick="loadHistory(${history.length-1-index})">
+      <span>💬</span>
+      <div>${escapeHistoryText(item.title || "New conversation")}</div>
+    </div>
+  `).join("");
+}
+
+function escapeHistoryText(text){
+  return String(text).replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#039;"
+  }[m]));
+}
+
+function loadHistory(index){
+  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+  const item=history[index];
+  if(!item) return;
+
+  const chat=document.getElementById("chat");
+  const welcome=document.getElementById("welcome");
+
+  if(welcome) welcome.style.display="none";
+  if(chat) chat.innerHTML=item.html || "";
+
+  toggleSidebar();
+}
+
+renderDragonHistory();
+
+function toggleSidebar(){
+  const sidebar=document.getElementById("sidebar");
+  const overlay=document.getElementById("sidebarOverlay");
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+}
+
+function newChat(){
+  const chat=document.getElementById("chat");
+  const welcome=document.getElementById("welcome");
+  if(chat) chat.innerHTML="";
+  if(welcome) welcome.style.display="block";
+  chatHistory.length=0;
+  toggleSidebar();
+}
+
+function filterHistory(){
+  const q=(document.getElementById("historySearch").value||"").toLowerCase();
+  document.querySelectorAll(".history-item").forEach(item=>{
+    item.style.display=item.textContent.toLowerCase().includes(q)?"block":"none";
+  });
+}
+
+function openSettings(){
+  const panel=document.getElementById("settingsPanel");
+  if(panel) panel.classList.add("show");
+  toggleSidebar();
+}
+function closeSettings(){
+  const panel=document.getElementById("settingsPanel");
+  if(panel) panel.classList.remove("show");
+}
 let selectedImage = null; let selectedFile = null;
 const chatHistory=[];
 document.getElementById("cameraInput").addEventListener("change",handleImage);
@@ -219,7 +1086,13 @@ document.getElementById("fileInput").addEventListener("change",handleFile);
 function handleImage(e){const file=e.target.files[0];if(!file)return;selectedFile=file;const reader=new FileReader();reader.onload=function(){selectedImage=reader.result;document.getElementById("question").value="📷 Image attached: "+file.name+"\n"+document.getElementById("question").value;console.log("IMAGE READY:",selectedImage.length);};reader.readAsDataURL(file);}
 function handleFile(e){const file=e.target.files[0];if(!file)return;const q=document.getElementById("question");q.value="📁 File selected: "+file.name+"\n"+q.value;}
 
-async function solve(){ if(selectedFile && !selectedImage){ selectedImage=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(selectedFile);}); }
+async function solve(){
+  const dragon=document.getElementById("dragonFly");
+  if(dragon){
+    dragon.classList.remove("fly");
+    void dragon.offsetWidth;
+    dragon.classList.add("fly");
+  } if(selectedFile && !selectedImage){ selectedImage=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(selectedFile);}); }
 const q=document.getElementById("question").value.trim();
 
 if(!q)return;
@@ -253,7 +1126,7 @@ body:JSON.stringify({messages:chatHistory,image:selectedImage || null})
 const d=await r.json();
 
 if(!r.ok)throw new Error(d.error||"AI solver error");
-chatHistory.push({role:"model",content:d.answer});
+chatHistory.push({role:"model",content:d.answer}); saveCurrentConversation();
 ai.innerHTML="<b>🐉 Dragon</b><br><br>"+escapeHTML(d.answer).replace(/\n/g,"<br>");
 
 }catch(e){
