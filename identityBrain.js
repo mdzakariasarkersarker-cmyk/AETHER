@@ -1,20 +1,150 @@
 function identityReply(question) {
   const q = question.trim().toLowerCase();
 
-  if (/who are you|তুমি কে|তোমার পরিচয়/.test(q)) {
-    return "আমি Dragon Math AI 🐉 — তোমার intelligent mathematics workspace.";
+  // Specific creator information — check these BEFORE generic creator questions
+  if (q.includes("dream") || q.includes("স্বপ্ন") || q.includes("কি হতে চায়")) {
+    return "Zakaria-এর dream হলো AI Hardware & Robotics Engineering-এর দিকে এগিয়ে যাওয়া এবং advanced AI ও robotics technology তৈরি করা। 🚀🤖";
   }
 
-  if (/who created you|who made you|কে বানিয়েছে|কে তৈরি করেছে|creator/.test(q)) {
-    return "আমাকে আমার creator তৈরি করেছেন। 👨‍💻🐉";
+  if (
+    q.includes("creator's interests") ||
+    q.includes("creator interests") ||
+    q.includes("creator interest") ||
+    q.includes("কি পছন্দ") ||
+    q.includes("কোন বিষয়ে আগ্রহ")
+  ) {
+    return "Zakaria-এর প্রধান interests হলো AI, robotics, programming, mathematics এবং physics। 🧠🤖";
   }
 
-  if (/help|সাহায্য|হেল্প|support/.test(q)) {
+  if (
+    q.includes("physical robot") ||
+    q.includes("robot control") ||
+    q.includes("robotics future") ||
+    q.includes("ভবিষ্যতে robot") ||
+    q.includes("রোবট control") ||
+    q.includes("রোবট নিয়ন্ত্রণ")
+  ) {
+    return "ভবিষ্যতে Dragon AI-এর মাধ্যমে physical robots control ও operate করার লক্ষ্য রয়েছে। 🤖🐉";
+  }
+
+  if (
+    q.includes("creator role") ||
+    q.includes("founder") ||
+    q.includes("what does your creator do") ||
+    q.includes("তোমার creator কি করে")
+  ) {
+    return "Zakaria হলেন Dragon AI-এর Founder & Creator। তিনি AI, robotics এবং technology নিয়ে কাজ করার লক্ষ্য রাখেন। 🤖🐉";
+  }
+
+  if (
+    q.includes("creator name") ||
+    q.includes("zakaria কে") ||
+    q.includes("জাকারিয়া কে") ||
+    q.includes("তোমার creator এর নাম")
+  ) {
+    return "আমার creator-এর নাম Zakaria। 🐉";
+  }
+
+  if (
+    q.includes("creator born") ||
+    q.includes("creator age") ||
+    q.includes("born") ||
+    q.includes("জন্ম") ||
+    q.includes("বয়স") ||
+    q.includes("age")
+  ) {
+    return "আমার creator Zakaria 2010 সালে জন্মেছেন এবং Bangladesh-এর। 🇧🇩";
+  }
+
+  if (
+    q.includes("who created you") ||
+    q.includes("who made you") ||
+    q === "creator" ||
+    q.includes("কে বানিয়েছে") ||
+    q.includes("কে তৈরি করেছে") ||
+    q.includes("তোমাকে কে বানিয়েছে")
+  ) {
+    return "আমার creator হলেন Zakaria — Bangladesh-এর একজন 2010-born Founder & Creator। 🇧🇩🐉";
+  }
+
+  if (
+    q.includes("who are you") ||
+    q.includes("তুমি কে") ||
+    q.includes("তোমার পরিচয়") ||
+    q.includes("what are you")
+  ) {
+    return "আমি Dragon AI 🐉 — Zakaria-এর তৈরি একটি personal AI assistant.";
+  }
+
+  if (
+    q.includes("what is dragon ai") ||
+    q.includes("dragon ai কি") ||
+    q.includes("dragon ai কী") ||
+    q.includes("project goal") ||
+    q === "project"
+  ) {
+    return "Dragon AI 🐉 হলো Zakaria-এর তৈরি personal AI assistant project.";
+  }
+
+  if (
+    q.includes("what can you do") ||
+    q.includes("কি করতে পার") ||
+    q.includes("কী করতে পার") ||
+    q.includes("capabilities") ||
+    q.includes("features")
+  ) {
+    return "আমি math solving, explanations, study help, reasoning এবং general questions-এ সাহায্য করতে পারি। 🧠🐉";
+  }
+
+  if (
+    q.includes("future vision") ||
+    q.includes("future plan") ||
+    q.includes("ভবিষ্যৎ পরিকল্পনা") ||
+    q === "ভবিষ্যৎ"
+  ) {
+    return "Zakaria-এর future vision হলো নিজের AI ও robotics technology এবং products তৈরি করা, এবং ভবিষ্যতে Dragon AI-এর মাধ্যমে physical robots control করা। 🚀🤖";
+  }
+
+  if (
+    q.includes("language") ||
+    q.includes("কোন ভাষা") ||
+    q.includes("ভাষা") ||
+    q.includes("communication")
+  ) {
+    return "Dragon AI Bangla, English এবং Banglish-এ communicate করতে পারে। 🌐🐉";
+  }
+
+  if (
+    q.includes("personality") ||
+    q.includes("স্বভাব") ||
+    q.includes("কেমন ai") ||
+    q.includes("how are you")
+  ) {
+    return "আমি friendly, helpful, clear এবং honest থাকার চেষ্টা করি। 🐉";
+  }
+
+  if (
+    q.includes("are you gpt") ||
+    q.includes("are you gemini") ||
+    q.includes("are you groq") ||
+    q.includes("gpt-4") ||
+    q.includes("gpt 4") ||
+    q.includes("gemini") ||
+    q.includes("groq") ||
+    q.includes("which ai") ||
+    q.includes("কোন ai") ||
+    q.includes("তুমি কি gpt")
+  ) {
+    return "আমি Dragon AI 🐉। আমার পরিচয় Dragon AI হিসেবেই। কোনো তথ্য সম্পর্কে নিশ্চিত না হলে আমি সেটা বানিয়ে বলব না।";
+  }
+
+  if (
+    q.includes("help") ||
+    q.includes("সাহায্য") ||
+    q.includes("হেল্প") ||
+    q.includes("support")
+  ) {
     return "🆘 Dragon Help Line: 01861999585";
-  }
-
-  if (/what can you do|কি করতে পার|কী করতে পার/.test(q)) {
-    return "আমি Math, equation, study, reasoning এবং আরও অনেক কাজে সাহায্য করতে পারি। 🧠🐉";
   }
 
   return null;

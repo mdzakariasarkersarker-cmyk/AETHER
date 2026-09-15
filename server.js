@@ -37,9 +37,9 @@ app.post("/solve", async (req, res) => {
     if (!Array.isArray(messages) || messages.length === 0) return res.status(400).json({ error: "Please enter a message." });
     const q = messages[messages.length - 1]?.content?.trim();
     const localEquation = solveLinearEquation(q || ""); if (localEquation !== null) return res.json({ answer: localEquation, brain: "local-equation" });
+    const localIdentity = identityReply(q || ""); if (localIdentity !== null) return res.json({ answer: localIdentity, brain: "local-identity" });
     console.log("Q TEST:", JSON.stringify(q)); const knowledgeAnswer = searchKnowledge(q || ""); if (knowledgeAnswer !== null) return res.json({ answer: knowledgeAnswer, brain: "knowledge" });
     console.log("KNOWLEDGE TEST:", JSON.stringify(knowledgeAnswer));
-    const localIdentity = identityReply(q || ""); if (localIdentity !== null) return res.json({ answer: localIdentity, brain: "local-identity" });
 
     const brain = detectBrain(q || ""); console.log("DRAGON BRAIN:", brain);
     const localScientific = solveAdvancedCalculator(q || ""); if (localScientific !== null) return res.json({ answer: localScientific, brain: "local-scientific" });
