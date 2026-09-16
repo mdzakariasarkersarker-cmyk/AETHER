@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQLYVEN Admin Dashboard</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">⚡ AQLYVEN</div>
+  <div class="admin-label">ADMIN PANEL</div>
+
+  <nav>
+    <button class="active">📊 Dashboard</button>
+    <button>👥 Users</button>
+    <button>⭐ Premium</button>
+    <button>📈 Analytics</button>
+    <button>⚙️ Settings</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <span>🔐 Admin</span>
+  </div>
+</aside>
+
+<main class="main">
+  <header>
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome to AQLYVEN control center.</p>
+    </div>
+    <div class="status">● System Online</div>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <span>👥 Total Users</span>
+      <strong id="users">0</strong>
+      <small>Registered users</small>
+    </div>
+
+    <div class="card">
+      <span>🟢 Active Users</span>
+      <strong id="active">0</strong>
+      <small>Currently active</small>
+    </div>
+
+    <div class="card">
+      <span>⭐ Premium Users</span>
+      <strong id="premium">0</strong>
+      <small>Premium accounts</small>
+    </div>
+
+    <div class="card">
+      <span>💬 AI Requests</span>
+      <strong id="requests">0</strong>
+      <small>Total requests</small>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-title">
+      <h2>Recent Users</h2>
+      <button class="refresh" onclick="loadDashboard()">↻ Refresh</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Status</th>
+            <th>Plan</th>
+            <th>Requests</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+          <tr>
+            <td colspan="4">No user data yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>
