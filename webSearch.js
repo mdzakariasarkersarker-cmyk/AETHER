@@ -1,5 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
+const { GoogleDecoder } = require("google-news-url-decoder");
+const googleDecoder = new GoogleDecoder();
 
 async function webSearch(query) {
   try {
@@ -19,7 +21,9 @@ async function webSearch(query) {
     const $ = cheerio.load(response.data, { xmlMode: true });
     const results = [];
 
-    $("item").each((i, el) => {
+    const items = $("item").toArray();
+
+    await Promise.all(items.map(async (el, i) => {
       if (results.length >= 8) return;
 
       const title = $(el).find("title").text().trim();
@@ -28,16 +32,25 @@ async function webSearch(query) {
       const source = $(el).find("source").text().trim();
       const description = $(el).find("description").text().trim();
 
-      if (title && link) {
+      if (title && link && results.length < 8) {
+        let originalUrl = link;
+
+        try {
+          const decoded = await googleDecoder.decode(link);
+          if (decoded && decoded.status && decoded.decoded_url) {
+            originalUrl = decoded.decoded_url;
+          }
+        } catch {}
+
         results.push({
           title,
           source,
           pubDate,
           text: cheerio.load(description).text().trim().slice(0, 500),
-          url: link
+          url: originalUrl
         });
       }
-    });
+    }));
 
     return results;
   } catch (error) {
