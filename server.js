@@ -17,6 +17,10 @@ const ai = new GoogleGenAI({
 
 app.use(express.json({limit:"10mb"}));
 
+app.get("/admin", (req, res) => {
+  res.sendFile(__dirname + "/admin/login.html");
+});
+
 app.use(express.static(__dirname));
 
 
