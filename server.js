@@ -2,6 +2,7 @@ const { identityReply } = require("./identityBrain");
 const { detectBrain, solveMath, solvePercentage, solveAdvancedCalculator, solveLinearEquation } = require("./brain");
 const { chatReply } = require("./chatBrain");
 const { searchKnowledge } = require("./knowledgeBrain");
+const { webSearch } = require("./webSearch");
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
@@ -38,6 +39,20 @@ app.post("/solve", async (req, res) => {
     const q = messages[messages.length - 1]?.content?.trim();
     const localEquation = solveLinearEquation(q || ""); if (localEquation !== null) return res.json({ answer: localEquation, brain: "local-equation" });
     const localIdentity = identityReply(q || ""); if (localIdentity !== null) return res.json({ answer: localIdentity, brain: "local-identity" });
+
+    // Web Search
+    if (/^\/search\s+/i.test(q || "")) {
+      const searchQuery = q.replace(/^\/search\s+/i, "").trim();
+      const results = await webSearch(searchQuery);
+
+      return res.json({
+        answer: results.length
+          ? results.map((r, i) => `${i + 1}. ${r.title}\n${r.text}\n${r.url}`).join("\n\n")
+          : "No web results found.",
+        brain: "web-search",
+        results
+      });
+    }
     console.log("Q TEST:", JSON.stringify(q)); const knowledgeAnswer = searchKnowledge(q || ""); if (knowledgeAnswer !== null) return res.json({ answer: knowledgeAnswer, brain: "knowledge" });
     console.log("KNOWLEDGE TEST:", JSON.stringify(knowledgeAnswer));
 
