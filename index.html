@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dragon AI</title>
+<title>AQLYVEN AI</title>
 
 <style>
 *{box-sizing:border-box}
@@ -808,6 +808,19 @@ textarea::placeholder{
 }
 </style>
 
+
+<style>
+.aqlyven-logo{
+  width:180px;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
+.welcome-logo{
+  width:220px;
+  margin:0 auto 18px;
+}
+</style>
 </head>
 
 <body>
@@ -822,7 +835,7 @@ textarea::placeholder{
     <div class="side-brand">
       <div class="side-dragon">🐉</div>
       <div>
-        <strong>Dragon AI</strong>
+        <strong>AQLYVEN AI</strong>
         <small>Your AI workspace</small>
       </div>
     </div>
@@ -852,7 +865,7 @@ textarea::placeholder{
     <div class="side-profile">
       <div class="profile-icon">🐉</div>
       <div>
-        <strong>Dragon AI</strong>
+        <strong>AQLYVEN AI</strong>
         <small>AI Assistant</small>
       </div>
       <span class="more">•••</span>
@@ -865,14 +878,14 @@ textarea::placeholder{
     <div class="settings-head">
       <div>
         <h2>Settings</h2>
-        <p>Customize your Dragon AI</p>
+        <p>Customize your AQLYVEN AI</p>
       </div>
       <button onclick="closeSettings()">×</button>
     </div>
 
     <div class="setting-row">
       <div>
-        <strong>Dragon AI</strong>
+        <strong>AQLYVEN AI</strong>
         <small>Personal AI assistant</small>
       </div>
       <span class="setting-status">ONLINE</span>
@@ -905,9 +918,9 @@ textarea::placeholder{
   <header class="header">
     <button class="menu-btn" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
     <div class="logo">
-      <div class="dragon-logo">🐉</div>
+      <img class="aqlyven-logo" src="/aqlyven-logo.svg" alt="AQLYVEN">
       <div class="brand">
-        <strong>DRAGON</strong>
+        <strong>AQLYVEN</strong>
         <span>AI</span>
       </div>
     </div>
@@ -921,9 +934,9 @@ textarea::placeholder{
   <main class="main">
 
     <section class="welcome" id="welcome">
-      <div class="welcome-dragon">🐉</div>
+      <img class="aqlyven-logo welcome-logo" src="/aqlyven-logo.svg" alt="AQLYVEN">
       <h1>How can <span>I help?</span></h1>
-      <p>Ask anything. Solve anything. <b>Powered by Dragon.</b></p>
+      <p>Ask anything. Solve anything. <b>Powered by AQLYVEN.</b></p>
 
       <div class="quick-actions">
         <button onclick="document.getElementById('question').value='Solve this math problem: '">∑ Math</button>
@@ -957,7 +970,7 @@ textarea::placeholder{
           </div>
         </div>
 
-        <textarea id="question" placeholder="Message Dragon AI..." rows="1"></textarea>
+        <textarea id="question" placeholder="Message AQLYVEN AI..." rows="1"></textarea>
 
         <button class="solve-btn" type="button" onclick="solve()">
           <span>✦</span> Solve
@@ -966,7 +979,7 @@ textarea::placeholder{
       </div>
 
       <div class="composer-hint">
-        Dragon AI can make mistakes. Check important answers.
+        AQLYVEN AI can make mistakes. Check important answers.
       </div>
 
     </div>
@@ -975,7 +988,7 @@ textarea::placeholder{
 
   <div class="status">
     <span class="status-dot"></span>
-    Dragon AI · Ready
+    AQLYVEN AI · Ready
   </div>
 
 </div>
@@ -987,7 +1000,7 @@ function saveCurrentConversation(){
   const firstUser=chatHistory.find(x=>x.role==="user");
   const title=firstUser ? firstUser.content.slice(0,45) : "New conversation";
 
-  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
 
   history.push({
     title:title,
@@ -995,12 +1008,12 @@ function saveCurrentConversation(){
     time:Date.now()
   });
 
-  localStorage.setItem("dragonHistory",JSON.stringify(history.slice(-30)));
+  localStorage.setItem("aqlyvenHistory",JSON.stringify(history.slice(-30)));
   renderDragonHistory();
 }
 
 function saveDragonHistory(){
-  localStorage.setItem("dragonHistory", JSON.stringify(chatHistory));
+  localStorage.setItem("aqlyvenHistory", JSON.stringify(chatHistory));
   renderDragonHistory();
 }
 
@@ -1008,7 +1021,7 @@ function renderDragonHistory(){
   const list=document.getElementById("historyList");
   if(!list) return;
 
-  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
 
   if(!history.length){
     list.innerHTML='<div class="empty-history">No conversations yet</div>';
@@ -1031,7 +1044,7 @@ function escapeHistoryText(text){
 }
 
 function loadHistory(index){
-  const history=JSON.parse(localStorage.getItem("dragonHistory") || "[]");
+  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
   const item=history[index];
   if(!item) return;
 
@@ -1110,7 +1123,7 @@ chat.appendChild(user);
 
 const ai=document.createElement("div");
 ai.className="message ai";
-ai.innerHTML="<b>🐉 Dragon</b><br><br>🧠 Analyzing...";
+ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>🧠 Analyzing...";
 chat.appendChild(ai);
 
 document.getElementById("question").value="";
@@ -1127,11 +1140,11 @@ const d=await r.json();
 
 if(!r.ok)throw new Error(d.error||"AI solver error");
 chatHistory.push({role:"model",content:d.answer}); saveCurrentConversation();
-ai.innerHTML="<b>🐉 Dragon</b><br><br>"+escapeHTML(d.answer).replace(/\n/g,"<br>");
+ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>"+escapeHTML(d.answer).replace(/\n/g,"<br>");
 
 }catch(e){
 
-ai.innerHTML="<b>🐉 Dragon</b><br><br>❌ "+escapeHTML(e.message);
+ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>❌ "+escapeHTML(e.message);
 
 }
 

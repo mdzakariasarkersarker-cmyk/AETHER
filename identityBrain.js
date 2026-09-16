@@ -24,7 +24,7 @@ function identityReply(question) {
     q.includes("রোবট control") ||
     q.includes("রোবট নিয়ন্ত্রণ")
   ) {
-    return "ভবিষ্যতে Dragon AI-এর মাধ্যমে physical robots control ও operate করার লক্ষ্য রয়েছে। 🤖🐉";
+    return "ভবিষ্যতে AQLYVEN AI-এর মাধ্যমে physical robots control ও operate করার লক্ষ্য রয়েছে। 🤖🐉";
   }
 
   if (
@@ -33,7 +33,7 @@ function identityReply(question) {
     q.includes("what does your creator do") ||
     q.includes("তোমার creator কি করে")
   ) {
-    return "Zakaria হলেন Dragon AI-এর Founder & Creator। তিনি AI, robotics এবং technology নিয়ে কাজ করার লক্ষ্য রাখেন। 🤖🐉";
+    return "Zakaria হলেন AQLYVEN AI-এর Founder & Creator। তিনি AI, robotics এবং technology নিয়ে কাজ করার লক্ষ্য রাখেন। 🤖🐉";
   }
 
   if (
@@ -73,7 +73,7 @@ function identityReply(question) {
     q.includes("তোমার পরিচয়") ||
     q.includes("what are you")
   ) {
-    return "আমি Dragon AI 🐉 — Zakaria-এর তৈরি একটি personal AI assistant.";
+    return "আমি AQLYVEN AI 🐉 — Zakaria-এর তৈরি একটি personal AI assistant.";
   }
 
   if (
@@ -83,7 +83,7 @@ function identityReply(question) {
     q.includes("project goal") ||
     q === "project"
   ) {
-    return "Dragon AI 🐉 হলো Zakaria-এর তৈরি personal AI assistant project.";
+    return "AQLYVEN AI 🐉 হলো Zakaria-এর তৈরি personal AI assistant project.";
   }
 
   if (
@@ -102,7 +102,7 @@ function identityReply(question) {
     q.includes("ভবিষ্যৎ পরিকল্পনা") ||
     q === "ভবিষ্যৎ"
   ) {
-    return "Zakaria-এর future vision হলো নিজের AI ও robotics technology এবং products তৈরি করা, এবং ভবিষ্যতে Dragon AI-এর মাধ্যমে physical robots control করা। 🚀🤖";
+    return "Zakaria-এর future vision হলো নিজের AI ও robotics technology এবং products তৈরি করা, এবং ভবিষ্যতে AQLYVEN AI-এর মাধ্যমে physical robots control করা। 🚀🤖";
   }
 
   if (
@@ -111,7 +111,7 @@ function identityReply(question) {
     q.includes("ভাষা") ||
     q.includes("communication")
   ) {
-    return "Dragon AI Bangla, English এবং Banglish-এ communicate করতে পারে। 🌐🐉";
+    return "AQLYVEN AI Bangla, English এবং Banglish-এ communicate করতে পারে। 🌐🐉";
   }
 
   if (
@@ -135,7 +135,7 @@ function identityReply(question) {
     q.includes("কোন ai") ||
     q.includes("তুমি কি gpt")
   ) {
-    return "আমি Dragon AI 🐉। আমার পরিচয় Dragon AI হিসেবেই। কোনো তথ্য সম্পর্কে নিশ্চিত না হলে আমি সেটা বানিয়ে বলব না।";
+    return "আমি AQLYVEN AI 🐉। আমার পরিচয় AQLYVEN AI হিসেবেই। কোনো তথ্য সম্পর্কে নিশ্চিত না হলে আমি সেটা বানিয়ে বলব না।";
   }
 
   if (
@@ -144,7 +144,7 @@ function identityReply(question) {
     q.includes("হেল্প") ||
     q.includes("support")
   ) {
-    return "🆘 Dragon Help Line: 01861999585";
+    return "🆘 AQLYVEN Help Line: 01861999585";
   }
 
   return null;

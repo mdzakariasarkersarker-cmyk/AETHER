@@ -2,7 +2,7 @@ function chatReply(question) {
   const q = question.trim().toLowerCase();
 
   if (/^(hi|hello|hey|হাই|হ্যালো|হেই)\b/.test(q)) {
-    return "Hey! 👋 আমি Dragon 🐉 কেমন আছো?";
+    return "Hey! 👋 আমি AQLYVEN AI ⚡ কেমন আছো?";
   }
 
   if (/how are you|কেমন আছ|কেমন আছো/.test(q)) {
@@ -10,7 +10,7 @@ function chatReply(question) {
   }
 
   if (/your name|তোমার নাম|নাম কী/.test(q)) {
-    return "আমার নাম Dragon Math AI 🐉";
+    return "আমার নাম AQLYVEN AI 🐉";
   }
 
   if (/what can you do|কি করতে পার|কী করতে পার|তুমি কী করতে পার/.test(q)) {

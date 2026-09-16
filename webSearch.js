@@ -54,7 +54,7 @@ async function webSearch(query) {
 
     return results;
   } catch (error) {
-    console.error("Dragon Update Search Error:", error.message);
+    console.error("AQLYVEN Update Search Error:", error.message);
     return [];
   }
 }

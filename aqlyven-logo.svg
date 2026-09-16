@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220">
+<defs>
+<linearGradient id="g" x1="0%" y1="100%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#00E5FF"/>
+<stop offset="50%" stop-color="#6C63FF"/>
+<stop offset="100%" stop-color="#B66DFF"/>
+</linearGradient>
+<filter id="glow">
+<feGaussianBlur stdDeviation="4" result="b"/>
+<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+</defs>
+
+<!-- AQLYVEN Symbol -->
+<g transform="translate(20 18)" filter="url(#glow)">
+<path d="M88 170L128 38Q132 25 144 25Q156 25 160 38L200 170"
+fill="none" stroke="url(#g)" stroke-width="18"
+stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M106 118H182"
+stroke="url(#g)" stroke-width="14" stroke-linecap="round"/>
+<circle cx="128" cy="38" r="5" fill="#00E5FF"/>
+<circle cx="200" cy="170" r="5" fill="#B66DFF"/>
+</g>
+
+<!-- Wordmark -->
+<text x="252" y="112"
+fill="#F7FAFF"
+font-family="Arial,Helvetica,sans-serif"
+font-size="67"
+font-weight="800"
+letter-spacing="7">AQLYVEN</text>
+
+<text x="257" y="153"
+fill="#9AA7BC"
+font-family="Arial,Helvetica,sans-serif"
+font-size="19"
+font-weight="500"
+letter-spacing="5">INTELLIGENCE BEYOND LIMITS.</text>
+</svg>
