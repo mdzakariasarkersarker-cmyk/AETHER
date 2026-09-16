@@ -157,3 +157,8 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`AQLYVEN AI Server running on port ${PORT}`);
 });
+
+
+app.get("/admin", (req, res) => {
+  res.sendFile(__dirname + "/admin/login.html");
+});
