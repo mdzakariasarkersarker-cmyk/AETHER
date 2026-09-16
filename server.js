@@ -41,9 +41,16 @@ app.post("/solve", async (req, res) => {
     const localIdentity = identityReply(q || ""); if (localIdentity !== null) return res.json({ answer: localIdentity, brain: "local-identity" });
 
     // Web Search
-    if (/^\/search\s+/i.test(q || "")) {
-      const searchQuery = q.replace(/^\/search\s+/i, "").trim();
+    const searchCommand = /^\/search\s+/i.test(q || "");
+    const automaticSearch = /\b(latest|today|today's|current|now|recent|news|update|updates|2026|এখন|আজ|আজকের|সর্বশেষ|সাম্প্রতিক|নতুন খবর)\b/i.test(q || "");
+
+    if (searchCommand || automaticSearch) {
+      const searchQuery = searchCommand
+        ? q.replace(/^\/search\s+/i, "").trim()
+        : q;
+
       const results = await webSearch(searchQuery);
+      console.log("WEB SEARCH DEBUG:", searchQuery, results.length, results[0]);
 
       return res.json({
         answer: results.length
