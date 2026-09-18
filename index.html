@@ -822,6 +822,234 @@ textarea::placeholder{
 }
 </style>
   <link rel="stylesheet" href="premium-ui.css">
+<style id="aqlyven-2030-ui">
+/* ===== AQLYVEN 2030 PREMIUM UI ===== */
+:root{
+  --a-bg:#05060b;
+  --a-panel:rgba(12,14,22,.72);
+  --a-panel2:rgba(18,21,32,.68);
+  --a-border:rgba(255,255,255,.075);
+  --a-text:#f7f8ff;
+  --a-muted:#858da3;
+  --a-violet:#8b5cf6;
+  --a-cyan:#22d3ee;
+}
+
+html,body{
+  background:
+    radial-gradient(900px 500px at 10% -10%,rgba(139,92,246,.16),transparent 60%),
+    radial-gradient(800px 500px at 100% 0%,rgba(34,211,238,.10),transparent 58%),
+    #05060b!important;
+  color:var(--a-text)!important;
+}
+
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+
+/* Sidebar */
+.sidebar{
+  background:rgba(7,9,15,.78)!important;
+  border-right:1px solid var(--a-border)!important;
+  backdrop-filter:blur(30px)!important;
+  -webkit-backdrop-filter:blur(30px)!important;
+  box-shadow:15px 0 60px rgba(0,0,0,.25)!important;
+}
+
+.sidebar:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  top:-90px;
+  left:-90px;
+  background:rgba(139,92,246,.13);
+  filter:blur(70px);
+  pointer-events:none;
+}
+
+/* Brand */
+.sidebar .brand,
+.brand{
+  letter-spacing:.04em!important;
+  text-shadow:0 0 25px rgba(139,92,246,.3)!important;
+}
+
+/* New chat */
+.new-chat-btn{
+  background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(34,211,238,.08))!important;
+  border:1px solid rgba(139,92,246,.25)!important;
+  border-radius:16px!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.18)!important;
+  transition:all .25s ease!important;
+}
+
+.new-chat-btn:hover{
+  border-color:rgba(139,92,246,.5)!important;
+  box-shadow:0 0 30px rgba(139,92,246,.12)!important;
+  transform:translateY(-2px)!important;
+}
+
+/* Search */
+#historySearch{
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid var(--a-border)!important;
+  border-radius:14px!important;
+  color:#fff!important;
+  transition:.25s ease!important;
+}
+
+#historySearch:focus{
+  border-color:rgba(139,92,246,.5)!important;
+  box-shadow:0 0 0 4px rgba(139,92,246,.08)!important;
+}
+
+/* Main */
+.main{
+  background:transparent!important;
+}
+
+/* Header */
+.main header{
+  border-bottom:1px solid rgba(255,255,255,.045)!important;
+}
+
+.main header h1{
+  letter-spacing:-.04em!important;
+  font-weight:750!important;
+}
+
+.main header p{
+  color:var(--a-muted)!important;
+}
+
+/* Chat */
+.chat{
+  background:transparent!important;
+}
+
+/* Messages */
+.chat .message,
+.chat .msg,
+.chat [class*="message"]{
+  animation:aqlyvenMessage .35s ease both;
+}
+
+@keyframes aqlyvenMessage{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Input */
+.input-box{
+  background:rgba(13,15,24,.78)!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  border-radius:26px!important;
+  backdrop-filter:blur(30px)!important;
+  -webkit-backdrop-filter:blur(30px)!important;
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.42),
+    0 0 50px rgba(139,92,246,.055)!important;
+  transition:border-color .25s ease,box-shadow .25s ease!important;
+}
+
+.input-box:focus-within{
+  border-color:rgba(139,92,246,.35)!important;
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.45),
+    0 0 55px rgba(139,92,246,.10)!important;
+}
+
+/* Textarea */
+.input-box textarea{
+  background:transparent!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  resize:none!important;
+}
+
+/* Tools */
+.input-box button,
+.input-box .tool{
+  border-radius:13px!important;
+  transition:all .2s ease!important;
+}
+
+.input-box button:hover,
+.input-box .tool:hover{
+  background:rgba(139,92,246,.12)!important;
+  transform:translateY(-1px)!important;
+}
+
+/* Profile */
+.side-profile{
+  background:linear-gradient(135deg,rgba(139,92,246,.11),rgba(34,211,238,.045))!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:18px!important;
+  backdrop-filter:blur(20px)!important;
+  transition:all .25s ease!important;
+}
+
+.side-profile:hover{
+  border-color:rgba(139,92,246,.35)!important;
+  box-shadow:0 10px 35px rgba(0,0,0,.22)!important;
+}
+
+.profile-icon{
+  background:linear-gradient(135deg,rgba(139,92,246,.24),rgba(34,211,238,.13))!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 0 25px rgba(139,92,246,.12)!important;
+}
+
+/* Account modal */
+#accountModal{
+  background:rgba(0,0,0,.72)!important;
+  backdrop-filter:blur(22px)!important;
+  -webkit-backdrop-filter:blur(22px)!important;
+}
+
+#accountModal>div{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(139,92,246,.12),transparent 45%),
+    rgba(10,12,20,.92)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:28px!important;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.7),
+    0 0 70px rgba(139,92,246,.09)!important;
+}
+
+/* Smooth scrollbar */
+*{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(139,92,246,.28) transparent;
+}
+
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  background:rgba(139,92,246,.28);
+  border-radius:20px;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  .sidebar{
+    box-shadow:10px 0 50px rgba(0,0,0,.4)!important;
+  }
+
+  .input-box{
+    border-radius:22px!important;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -1248,3 +1476,4 @@ async function accountAction(action){
 
 </body>
 </html>
+
