@@ -862,14 +862,14 @@ textarea::placeholder{
       <span>⚙️</span> Settings
     </button>
 
-    <div class="side-profile">
-      <div class="profile-icon">🐉</div>
+    <button class="side-profile" onclick="openAccount()" style="width:100%;border:0;text-align:left;cursor:pointer">
+      <div class="profile-icon">👤</div>
       <div>
-        <strong>AQLYVEN AI</strong>
-        <small>AI Assistant</small>
+        <strong id="profileName">Login / Sign up</strong>
+        <small id="profileStatus">AQLYVEN Account</small>
       </div>
       <span class="more">•••</span>
-    </div>
+    </button>
   </div>
 </aside>
 
@@ -1179,5 +1179,71 @@ solve();
 
 
 </script>
+
+<div id="accountModal" style="display:none;position:fixed;inset:0;background:#0009;z-index:9999;align-items:center;justify-content:center;padding:20px">
+  <div style="width:min(100%,390px);background:#0d1120;border:1px solid #29314a;border-radius:20px;padding:28px;box-shadow:0 20px 70px #000b">
+    <div style="text-align:center;font-size:24px;font-weight:800">⚡ AQLYVEN</div>
+    <div style="text-align:center;color:#8993ad;font-size:13px;margin:7px 0 24px">YOUR AI ACCOUNT</div>
+
+    <div id="accountForm">
+      <input id="accountUsername" placeholder="Username" autocomplete="username"
+        style="width:100%;padding:13px;margin-bottom:12px;border-radius:10px;border:1px solid #29314a;background:#080b14;color:#fff">
+      <input id="accountPassword" type="password" placeholder="Password" autocomplete="current-password"
+        style="width:100%;padding:13px;margin-bottom:14px;border-radius:10px;border:1px solid #29314a;background:#080b14;color:#fff">
+
+      <button onclick="accountAction('login')" style="width:100%;padding:13px;border:0;border-radius:10px;font-weight:700;cursor:pointer">Login</button>
+      <button onclick="accountAction('register')" style="width:100%;padding:13px;margin-top:9px;border:1px solid #29314a;border-radius:10px;background:transparent;color:#fff;cursor:pointer">Create Account</button>
+
+      <div id="accountMsg" style="text-align:center;min-height:20px;margin-top:14px;font-size:13px"></div>
+    </div>
+
+    <div id="accountClose" style="text-align:center;margin-top:18px">
+      <button onclick="closeAccount()" style="background:none;border:0;color:#8993ad;cursor:pointer">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openAccount(){
+  document.getElementById("accountModal").style.display="flex";
+}
+
+function closeAccount(){
+  document.getElementById("accountModal").style.display="none";
+}
+
+async function accountAction(action){
+  const username=document.getElementById("accountUsername").value.trim();
+  const password=document.getElementById("accountPassword").value;
+  const msg=document.getElementById("accountMsg");
+
+  msg.textContent="Please wait...";
+  msg.style.color="#8993ad";
+
+  try{
+    const r=await fetch("/api/"+(action==="login"?"login":"register"),{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      credentials:"same-origin",
+      body:JSON.stringify({username,password})
+    });
+
+    const data=await r.json();
+
+    if(data.ok){
+      msg.textContent=action==="login"?"✅ Logged in":"✅ Account created";
+      msg.style.color="#6ee7b7";
+      setTimeout(closeAccount,700);
+    }else{
+      msg.textContent="❌ "+(data.error||"Something went wrong");
+      msg.style.color="#ff7777";
+    }
+  }catch(e){
+    msg.textContent="❌ Connection error";
+    msg.style.color="#ff7777";
+  }
+}
+</script>
+
 </body>
 </html>

@@ -260,6 +260,115 @@ app.post("/solve", async (req, res) => {
   }
 });
 
+// ===== AQLYVEN USER ACCOUNT API =====
+const crypto = require("crypto");
+
+function hashPassword(password) {
+  return crypto.scryptSync(password, "AQLYVEN-SALT-2026", 64).toString("hex");
+}
+
+app.post("/api/register", (req, res) => {
+  try {
+    const { username, password } = req.body || {};
+
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password are required." });
+    }
+
+    if (username.length < 3 || password.length < 6) {
+      return res.status(400).json({ error: "Username: 3+ characters. Password: 6+ characters." });
+    }
+
+    const existing = db.prepare("SELECT id FROM users WHERE username = ?").get(username);
+
+    if (existing) {
+      return res.status(409).json({ error: "Username already exists." });
+    }
+
+    const now = new Date().toISOString();
+    const id = crypto.randomUUID();
+    const passwordHash = hashPassword(password);
+
+    db.prepare(`
+      INSERT INTO users
+      (id, first_seen, last_seen, requests, plan, blocked, username, password_hash)
+      VALUES (?, ?, ?, 0, 'free', 0, ?, ?)
+    `).run(id, now, now, username, passwordHash);
+
+    res.json({
+      ok: true,
+      message: "Account created successfully.",
+      username
+    });
+  } catch (err) {
+    console.error("REGISTER ERROR:", err.message);
+    res.status(500).json({ error: "Account creation failed." });
+  }
+});
+
+app.post("/api/login", (req, res) => {
+  try {
+    const { username, password } = req.body || {};
+
+    const user = db.prepare(
+      "SELECT id, username, password_hash, blocked, plan FROM users WHERE username = ?"
+    ).get(username);
+
+    if (!user || user.blocked) {
+      return res.status(401).json({ error: "Invalid username or password." });
+    }
+
+    const passwordHash = hashPassword(password);
+
+    if (passwordHash !== user.password_hash) {
+      return res.status(401).json({ error: "Invalid username or password." });
+    }
+
+    req.session.userId = user.id;
+    req.session.username = user.username;
+
+    db.prepare("UPDATE users SET last_seen = ? WHERE id = ?")
+      .run(new Date().toISOString(), user.id);
+
+    res.json({
+      ok: true,
+      username: user.username,
+      plan: user.plan
+    });
+  } catch (err) {
+    console.error("LOGIN ERROR:", err.message);
+    res.status(500).json({ error: "Login failed." });
+  }
+});
+
+app.post("/api/logout", (req, res) => {
+  req.session.userId = null;
+  req.session.username = null;
+  res.json({ ok: true });
+});
+
+app.get("/api/me", (req, res) => {
+  if (!req.session.userId) {
+    return res.json({ loggedIn: false });
+  }
+
+  const user = db.prepare(
+    "SELECT id, username, plan, blocked, requests FROM users WHERE id = ?"
+  ).get(req.session.userId);
+
+  if (!user || user.blocked) {
+    return res.json({ loggedIn: false });
+  }
+
+  res.json({
+    loggedIn: true,
+    id: user.id,
+    username: user.username,
+    plan: user.plan,
+    requests: user.requests
+  });
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
