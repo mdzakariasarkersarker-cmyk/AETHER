@@ -19,14 +19,22 @@ const ai = new GoogleGenAI({
 
 app.use(express.json({limit:"10mb"}));
 
-app.use(require("express-session")({
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
+
+app.use(session({
+  store: new SQLiteStore({
+    db: "sessions.db",
+    dir: path.join(__dirname, "data")
+  }),
   secret: process.env.ADMIN_SESSION_SECRET || "change-this-secret",
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
     sameSite: "lax",
-    secure: false
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24 * 30
   }
 }));
 
@@ -143,6 +151,12 @@ app.use((req, res, next) => {
 
 app.post("/solve", async (req, res) => {
   try {
+    if (!req.session.userId) {
+      return res.status(401).json({
+        error: "Please login or create an account to use AQLYVEN AI."
+      });
+    }
+
     trackUser(req);
     const messages = req.body.messages;
     const image = req.body.image;
