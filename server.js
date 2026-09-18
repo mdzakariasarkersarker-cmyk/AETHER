@@ -84,6 +84,26 @@ function trackUser(req) {
   }
 }
 
+app.get("/admin/api/users", (req, res) => {
+  if (!req.session.isAdmin) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  try {
+    const users = db.prepare(`
+      SELECT id, last_seen, requests, plan, blocked
+      FROM users
+      ORDER BY last_seen DESC
+      LIMIT 20
+    `).all();
+
+    res.json(users);
+  } catch (err) {
+    console.error("USERS ERROR:", err.message);
+    res.status(500).json({ error: "Users unavailable" });
+  }
+});
+
 app.get("/admin/api/stats", (req, res) => {
   if (!req.session.isAdmin) {
     return res.status(401).json({ error: "Unauthorized" });
