@@ -19,6 +19,23 @@ db.exec(`
   )
 `);
 
+try {
+  const columns = db.prepare("PRAGMA table_info(users)").all().map(c => c.name);
+
+  if (!columns.includes("username")) {
+    db.exec("ALTER TABLE users ADD COLUMN username TEXT");
+  }
+
+  if (!columns.includes("password_hash")) {
+    db.exec("ALTER TABLE users ADD COLUMN password_hash TEXT");
+  }
+
+  db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_username ON users(username)");
+  console.log("✅ Account schema ready");
+} catch (err) {
+  console.error("ACCOUNT SCHEMA ERROR:", err.message);
+}
+
 console.log("✅ AQLYVEN database ready");
 
 module.exports = db;
