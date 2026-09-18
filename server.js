@@ -3,7 +3,7 @@ const { detectBrain, solveMath, solvePercentage, solveAdvancedCalculator, solveL
 const { chatReply } = require("./chatBrain");
 const { searchKnowledge } = require("./knowledgeBrain");
 const { webSearch } = require("./webSearch");
-require("dotenv").config();
+require("dotenv").config({ override: true });
 const express = require("express");
 const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
@@ -16,6 +16,47 @@ const ai = new GoogleGenAI({
 });
 
 app.use(express.json({limit:"10mb"}));
+
+app.use(require("express-session")({
+  secret: process.env.ADMIN_SESSION_SECRET || "change-this-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false
+  }
+}));
+
+
+
+app.post("/admin/login", (req, res) => {
+  const password = req.body?.password || "";
+
+  if (password && password === process.env.ADMIN_PASSWORD) {
+    req.session.isAdmin = true;
+    return res.json({ ok: true });
+  }
+
+  return res.status(401).json({ ok: false, error: "Invalid password" });
+});
+
+
+
+
+
+app.get("/admin/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/admin");
+  });
+});
+
+app.get("/admin/dashboard", (req, res) => {
+  if (!req.session.isAdmin) {
+    return res.redirect("/admin");
+  }
+  res.sendFile(__dirname + "/admin/index.html");
+});
 
 app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/admin/login.html");
@@ -159,7 +200,3 @@ app.listen(PORT, () => {
   console.log(`AQLYVEN AI Server running on port ${PORT}`);
 });
 
-
-app.get("/admin", (req, res) => {
-  res.sendFile(__dirname + "/admin/login.html");
-});

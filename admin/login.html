@@ -33,7 +33,29 @@ button{width:100%;padding:14px;border:0;border-radius:10px;background:#fff;color
 <script>
 document.getElementById("loginForm").onsubmit = async e => {
   e.preventDefault();
-  document.getElementById("msg").textContent = "Connecting...";
+
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
+
+  msg.textContent = "Checking...";
+
+  try {
+    const r = await fetch("/admin/login", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({password})
+    });
+
+    const data = await r.json();
+
+    if (data.ok) {
+      window.location.href = "/admin/dashboard";
+    } else {
+      msg.textContent = "❌ Invalid password";
+    }
+  } catch (e) {
+    msg.textContent = "❌ Connection error";
+  }
 };
 </script>
 </body>
