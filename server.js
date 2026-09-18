@@ -3,9 +3,11 @@ const { detectBrain, solveMath, solvePercentage, solveAdvancedCalculator, solveL
 const { chatReply } = require("./chatBrain");
 const { searchKnowledge } = require("./knowledgeBrain");
 const { webSearch } = require("./webSearch");
+const db = require("./database");
 require("dotenv").config({ override: true });
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const { GoogleGenAI } = require("@google/genai");
 
 const Groq = require("groq-sdk");
@@ -62,6 +64,49 @@ app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/admin/login.html");
 });
 
+
+function trackUser(req) {
+  try {
+    const now = new Date().toISOString();
+    const id = req.sessionID;
+
+    const existing = db.prepare("SELECT id FROM users WHERE id = ?").get(id);
+
+    if (existing) {
+      db.prepare("UPDATE users SET last_seen = ?, requests = requests + 1 WHERE id = ?")
+        .run(now, id);
+    } else {
+      db.prepare("INSERT INTO users (id, first_seen, last_seen, requests, plan, blocked) VALUES (?, ?, ?, 1, 'free', 0)")
+        .run(id, now, now);
+    }
+  } catch (err) {
+    console.error("USER TRACKING ERROR:", err.message);
+  }
+}
+
+app.get("/admin/api/stats", (req, res) => {
+  if (!req.session.isAdmin) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  try {
+    const totalUsers = db.prepare("SELECT COUNT(*) AS count FROM users").get().count;
+    const premiumUsers = db.prepare("SELECT COUNT(*) AS count FROM users WHERE plan = 'premium'").get().count;
+    const blockedUsers = db.prepare("SELECT COUNT(*) AS count FROM users WHERE blocked = 1").get().count;
+    const requests = db.prepare("SELECT COALESCE(SUM(requests), 0) AS total FROM users").get().total;
+
+    res.json({
+      totalUsers,
+      activeUsers: totalUsers - blockedUsers,
+      premiumUsers,
+      requests
+    });
+  } catch (err) {
+    console.error("STATS ERROR:", err.message);
+    res.status(500).json({ error: "Stats unavailable" });
+  }
+});
+
 app.use(express.static(__dirname));
 
 
@@ -78,6 +123,7 @@ app.use((req, res, next) => {
 
 app.post("/solve", async (req, res) => {
   try {
+    trackUser(req);
     const messages = req.body.messages;
     const image = req.body.image;
     console.log("IMAGE RECEIVED:", !!image, image ? image.length : 0);
