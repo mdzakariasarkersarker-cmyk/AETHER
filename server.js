@@ -151,12 +151,6 @@ app.use((req, res, next) => {
 
 app.post("/solve", async (req, res) => {
   try {
-    if (!req.session.userId) {
-      return res.status(401).json({
-        error: "Please login or create an account to use AQLYVEN AI."
-      });
-    }
-
     trackUser(req);
     const messages = req.body.messages;
     const image = req.body.image;
