@@ -9,6 +9,8 @@ async function loadDashboard() {
     document.getElementById("active").textContent = data.activeUsers ?? 0;
     document.getElementById("premium").textContent = data.premiumUsers ?? 0;
     document.getElementById("requests").textContent = data.requests ?? 0;
+    document.getElementById("todayUsers").textContent = data.todayUsers ?? 0;
+    document.getElementById("todayRequests").textContent = data.todayRequests ?? 0;
 
     loadRecentUsers();
   } catch (err) {

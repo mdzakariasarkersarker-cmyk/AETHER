@@ -123,11 +123,21 @@ app.get("/admin/api/stats", (req, res) => {
     const blockedUsers = db.prepare("SELECT COUNT(*) AS count FROM users WHERE blocked = 1").get().count;
     const requests = db.prepare("SELECT COALESCE(SUM(requests), 0) AS total FROM users").get().total;
 
+    const todayUsers = db.prepare(
+      "SELECT COUNT(*) AS count FROM users WHERE date(first_seen) = date('now')"
+    ).get().count;
+
+    const todayRequests = db.prepare(
+      "SELECT COALESCE(SUM(requests), 0) AS total FROM users WHERE date(last_seen) = date('now')"
+    ).get().total;
+
     res.json({
       totalUsers,
       activeUsers: totalUsers - blockedUsers,
       premiumUsers,
-      requests
+      requests,
+      todayUsers,
+      todayRequests
     });
   } catch (err) {
     console.error("STATS ERROR:", err.message);
