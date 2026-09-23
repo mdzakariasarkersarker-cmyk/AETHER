@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AQLYVEN</title>
+<title>AETHER</title>
 
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -178,7 +178,7 @@ body{overflow:hidden}
 }
 
 .logo{display:flex;align-items:center;gap:10px}
-.aqlyven-logo{width:34px;height:34px}
+.aether-logo{width:34px;height:34px}
 .brand strong{
   font-size:16px;
   letter-spacing:.16em;
@@ -467,7 +467,7 @@ body{overflow:hidden}
   .chat{width:94%;padding-bottom:125px}
 }
 </style>
-\n</head>
+\n<link rel="stylesheet" href="/aether-ui.css"></head>
 
 <body>
 
@@ -481,7 +481,7 @@ body{overflow:hidden}
     <div class="side-brand">
       <div class="side-dragon">⚡</div>
       <div>
-        <strong>AQLYVEN</strong>
+        <strong>AETHER</strong>
         <small>Your AI workspace</small>
       </div>
     </div>
@@ -512,7 +512,7 @@ body{overflow:hidden}
       <div class="profile-icon">👤</div>
       <div>
         <strong id="profileName">Login / Sign up</strong>
-        <small id="profileStatus">AQLYVEN Account</small>
+        <small id="profileStatus">AETHER Account</small>
       </div>
       <span class="more">•••</span>
     </button>
@@ -524,14 +524,14 @@ body{overflow:hidden}
     <div class="settings-head">
       <div>
         <h2>Settings</h2>
-        <p>Customize your AQLYVEN</p>
+        <p>Customize your AETHER</p>
       </div>
       <button onclick="closeSettings()">×</button>
     </div>
 
     <div class="setting-row">
       <div>
-        <strong>AQLYVEN</strong>
+        <strong>AETHER</strong>
         <small>Personal AI assistant</small>
       </div>
       <span class="setting-status">ONLINE</span>
@@ -564,9 +564,9 @@ body{overflow:hidden}
   <header class="header">
     <button class="menu-btn" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
     <div class="logo">
-      <img class="aqlyven-logo" src="/aqlyven-logo.svg" alt="AQLYVEN">
+      <img class="aether-logo" src="/aether-logo.svg" alt="AETHER">
       <div class="brand">
-        <strong>AQLYVEN</strong>
+        <strong>AETHER</strong>
       </div>
     </div>
 
@@ -579,9 +579,9 @@ body{overflow:hidden}
   <main class="main">
 
     <section class="welcome" id="welcome">
-      <img class="aqlyven-logo welcome-logo" src="/aqlyven-logo.svg" alt="AQLYVEN">
+      <img class="aether-logo welcome-logo" src="/aether-logo.svg" alt="AETHER">
       <h1>How can <span>I help?</span></h1>
-      <p>Ask anything. Solve anything. <b>Powered by AQLYVEN.</b></p>
+      <p>Ask anything. Solve anything. <b>Powered by AETHER.</b></p>
 
       <div class="quick-actions">
         <button onclick="document.getElementById('question').value='Solve this math problem: '">∑ Math</button>
@@ -615,7 +615,7 @@ body{overflow:hidden}
           </div>
         </div>
 
-        <textarea id="question" placeholder="Message AQLYVEN..." rows="1"></textarea>
+        <textarea id="question" placeholder="Message AETHER..." rows="1"></textarea>
 
         <button class="solve-btn" type="button" onclick="solve()">
           <span>✦</span> Solve
@@ -624,7 +624,7 @@ body{overflow:hidden}
       </div>
 
       <div class="composer-hint">
-        AQLYVEN can make mistakes. Check important answers.
+        AETHER can make mistakes. Check important answers.
       </div>
 
     </div>
@@ -633,7 +633,7 @@ body{overflow:hidden}
 
   <div class="status">
     <span class="status-dot"></span>
-    AQLYVEN · Ready
+    AETHER · Ready
   </div>
 
 </div>
@@ -768,7 +768,7 @@ chat.appendChild(user);
 
 const ai=document.createElement("div");
 ai.className="message ai";
-ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>🧠 Analyzing...";
+ai.innerHTML="<b>⚡ AETHER</b><br><br>🧠 Analyzing...";
 chat.appendChild(ai);
 
 document.getElementById("question").value="";
@@ -785,7 +785,7 @@ const d=await r.json();
 
 if(!r.ok)throw new Error(d.error||"AI solver error");
 chatHistory.push({role:"model",content:d.answer}); saveCurrentConversation();
-ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>"+marked.parse(d.answer);
+ai.innerHTML="<b>⚡ AETHER</b><br><br>"+marked.parse(d.answer);
 
 if (window.MathJax) {
   MathJax.typesetPromise([ai]).catch(err => console.error("MathJax:", err));
@@ -793,7 +793,7 @@ if (window.MathJax) {
 
 }catch(e){
 
-ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>❌ "+escapeHTML(e.message);
+ai.innerHTML="<b>⚡ AETHER</b><br><br>❌ "+escapeHTML(e.message);
 
 }
 
@@ -831,7 +831,7 @@ solve();
 
 <div id="accountModal" style="display:none;position:fixed;inset:0;background:#0009;z-index:9999;align-items:center;justify-content:center;padding:20px">
   <div style="width:min(100%,390px);background:#0d1120;border:1px solid #29314a;border-radius:20px;padding:28px;box-shadow:0 20px 70px #000b">
-    <div style="text-align:center;font-size:24px;font-weight:800">⚡ AQLYVEN</div>
+    <div style="text-align:center;font-size:24px;font-weight:800">⚡ AETHER</div>
     <div style="text-align:center;color:#8993ad;font-size:13px;margin:7px 0 24px">YOUR AI ACCOUNT</div>
 
     <div id="accountForm">
@@ -897,3 +897,108 @@ async function accountAction(action){
 </body>
 </html>
 
+
+<style id="aether-ui-v1">
+/* AETHER UI V1 — visual layer only */
+:root{
+  --aether-bg:#07080c;
+  --aether-panel:rgba(15,17,24,.78);
+  --aether-line:rgba(255,255,255,.10);
+  --aether-text:#f5f7ff;
+  --aether-muted:#8d93a6;
+  --aether-accent:#a78bfa;
+}
+
+body{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(124,92,255,.13),transparent 32%),
+    radial-gradient(circle at 100% 100%,rgba(0,210,255,.07),transparent 30%),
+    var(--aether-bg)!important;
+  color:var(--aether-text)!important;
+}
+
+.sidebar{
+  background:rgba(9,10,15,.88)!important;
+  border-right:1px solid var(--aether-line)!important;
+  backdrop-filter:blur(24px)!important;
+}
+
+.header{
+  background:rgba(7,8,12,.58)!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important;
+  backdrop-filter:blur(20px)!important;
+}
+
+.header .logo,
+.welcome h1{
+  letter-spacing:-.04em!important;
+  font-weight:800!important;
+}
+
+.welcome-logo{
+  border-radius:22px!important;
+  box-shadow:
+    0 0 0 1px rgba(167,139,250,.20),
+    0 0 45px rgba(124,92,255,.20)!important;
+}
+
+.welcome p{
+  color:var(--aether-muted)!important;
+}
+
+.chat{
+  scrollbar-width:thin;
+}
+
+.input-box{
+  background:var(--aether-panel)!important;
+  border:1px solid var(--aether-line)!important;
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.04)!important;
+  backdrop-filter:blur(24px)!important;
+}
+
+.input-box:focus-within{
+  border-color:rgba(167,139,250,.45)!important;
+  box-shadow:
+    0 18px 70px rgba(0,0,0,.50),
+    0 0 0 3px rgba(167,139,250,.08)!important;
+}
+
+#question{
+  color:var(--aether-text)!important;
+}
+
+#question::placeholder{
+  color:#777d90!important;
+}
+
+.solve-btn{
+  background:linear-gradient(135deg,#9b7cff,#6d4aff)!important;
+  border:0!important;
+  box-shadow:0 8px 28px rgba(124,92,255,.28)!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+
+.solve-btn:hover{
+  transform:translateY(-1px) scale(1.025)!important;
+  box-shadow:0 10px 35px rgba(124,92,255,.40)!important;
+}
+
+.sidebar,
+.settings-panel,
+.attach-menu{
+  box-shadow:0 25px 80px rgba(0,0,0,.42)!important;
+}
+
+@media(max-width:760px){
+  .header{
+    background:rgba(7,8,12,.72)!important;
+  }
+
+  .input-box{
+    border-radius:22px!important;
+  }
+}
+</style>
