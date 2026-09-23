@@ -7,6 +7,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 <style id="aqlyven-clean-ui">
@@ -782,7 +783,11 @@ const d=await r.json();
 
 if(!r.ok)throw new Error(d.error||"AI solver error");
 chatHistory.push({role:"model",content:d.answer}); saveCurrentConversation();
-ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>"+escapeHTML(d.answer).replace(/\n/g,"<br>");
+ai.innerHTML="<b>⚡ AQLYVEN</b><br><br>"+marked.parse(d.answer);
+
+if (window.MathJax) {
+  MathJax.typesetPromise([ai]).catch(err => console.error("MathJax:", err));
+}
 
 }catch(e){
 
