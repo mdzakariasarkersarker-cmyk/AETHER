@@ -155,7 +155,7 @@ app.get("/admin/api/stats", (req, res) => {
 });
 
 app.use((req, res, next) => {
-  const blocked = /(^|\/)(server-|server\.|.*\.backup|index-.*|index\..*|brain-.*|identityBrain\..*|webSearch\..*|xai-test\.js|test\.js)(\/|$)/i;
+  const blocked = /(^|\/)(server[^/]*|index[^/]*|brain[^/]*|identityBrain[^/]*|webSearch[^/]*|xai-test\.js|test\.js|.*\.backup)(\/|$)/i;
   if (blocked.test(req.path)) return res.status(404).send("Not Found");
   next();
 });
