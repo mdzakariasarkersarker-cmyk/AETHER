@@ -6,12 +6,21 @@ const { webSearch } = require("./webSearch");
 const db = require("./database");
 require("dotenv").config({ override: true });
 const express = require("express");
+const { rateLimit } = require("express-rate-limit");
 const path = require("path");
 const fs = require("fs");
 const { GoogleGenAI } = require("@google/genai");
 
 const Groq = require("groq-sdk");
 const app = express();
+
+const solveLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 30,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please try again later." }
+});
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
@@ -145,6 +154,12 @@ app.get("/admin/api/stats", (req, res) => {
   }
 });
 
+app.use((req, res, next) => {
+  const blocked = /(^|\/)(server-|server\.|.*\.backup|index-.*|index\..*|brain-.*|identityBrain\..*|webSearch\..*|xai-test\.js|test\.js)(\/|$)/i;
+  if (blocked.test(req.path)) return res.status(404).send("Not Found");
+  next();
+});
+
 app.use(express.static(__dirname));
 
 
@@ -159,7 +174,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/solve", async (req, res) => {
+app.post("/solve", solveLimiter, async (req, res) => {
   try {
     trackUser(req);
     const messages = req.body.messages;
