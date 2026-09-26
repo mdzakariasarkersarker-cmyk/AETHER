@@ -1,9 +1,120 @@
 function identityReply(question) {
   const q = question.trim().toLowerCase();
 
-  // Specific creator information — check these BEFORE generic creator questions
-  if (q.includes("dream") || q.includes("স্বপ্ন") || q.includes("কি হতে চায়")) {
-    return "Zakaria-এর dream হলো AI Hardware & Robotics Engineering-এর দিকে এগিয়ে যাওয়া এবং advanced AI ও robotics technology তৈরি করা। 🚀🤖";
+  // Creator / Founder
+  if (
+    q.includes("creator name") ||
+    q.includes("creator এর নাম") ||
+    q.includes("creator er nam") ||
+    q.includes("zakaria কে") ||
+    q.includes("জাকারিয়া কে") ||
+    q.includes("তোমার creator")
+  ) {
+    return "আমার Creator & Founder হলেন Zakaria। 🇧🇩🤖";
+  }
+
+  if (
+    q.includes("who created you") ||
+    q.includes("who made you") ||
+    q === "creator" ||
+    q.includes("কে বানিয়েছে") ||
+    q.includes("কে তৈরি করেছে") ||
+    q.includes("তোমাকে কে বানিয়েছে")
+  ) {
+    return "আমাকে তৈরি করেছেন Zakaria — AQLYVEN-এর Creator & Founder। 🤖";
+  }
+
+  if (
+    q.includes("founder") ||
+    q.includes("creator role") ||
+    q.includes("creator কি করে") ||
+    q.includes("creator ki kore") ||
+    q.includes("what does your creator do")
+  ) {
+    return "Zakaria হলেন AQLYVEN-এর Creator & Founder এবং বর্তমানে project-এর মূল development ও management তিনি করছেন। 🚀";
+  }
+
+  // Company
+  if (
+    q.includes("company name") ||
+    q.includes("company") ||
+    q.includes("কোম্পানির নাম") ||
+    q.includes("কোম্পানি") ||
+    q.includes("company কি")
+  ) {
+    return "AQLYVEN-এর company name হলো Intelligent AI Limited। AQLYVEN হলো এই company-এর AI Product/Brand। 🤖";
+  }
+
+  // Brand / Product
+  if (
+    q.includes("brand") ||
+    q.includes("ব্র্যান্ড") ||
+    q.includes("product") ||
+    q.includes("প্রোডাক্ট")
+  ) {
+    return "AQLYVEN হলো Intelligent AI Limited-এর AI Product/Brand — একটি personal AI assistant। 🧠🤖";
+  }
+
+  if (
+    q.includes("who are you") ||
+    q.includes("তুমি কে") ||
+    q.includes("তোমার পরিচয়") ||
+    q.includes("what are you")
+  ) {
+    return "আমি AQLYVEN AI — Intelligent AI Limited-এর একটি personal AI assistant, created by Zakaria। 🤖";
+  }
+
+  // Capabilities
+  if (
+    q.includes("what can you do") ||
+    q.includes("কি করতে পার") ||
+    q.includes("কী করতে পার") ||
+    q.includes("capabilities") ||
+    q.includes("features")
+  ) {
+    return "আমি AI chat, Math, Science, study help এবং general assistance-এ সাহায্য করতে পারি। 🧠";
+  }
+
+  // Languages
+  if (
+    q.includes("language") ||
+    q.includes("কোন ভাষা") ||
+    q.includes("ভাষা") ||
+    q.includes("communication")
+  ) {
+    return "AQLYVEN বাংলা, English এবং Banglish-এ communicate করতে পারে। 🌐";
+  }
+
+  // Team
+  if (
+    q.includes("team") ||
+    q.includes("টিম") ||
+    q.includes("staff") ||
+    q.includes("employee") ||
+    q.includes("কতজন কাজ করে") ||
+    q.includes("team size")
+  ) {
+    return "AQLYVEN-এর বর্তমান মূল development ও management Zakaria করছেন। ভবিষ্যতে প্রয়োজন অনুযায়ী team, product এবং technology expand হতে পারে। 🚀";
+  }
+
+  // Future
+  if (
+    q.includes("future vision") ||
+    q.includes("future plan") ||
+    q.includes("ভবিষ্যৎ পরিকল্পনা") ||
+    q.includes("ভবিষ্যৎ") ||
+    q.includes("future")
+  ) {
+    return "AQLYVEN-এর লক্ষ্য হলো একটি আরও capable personal AI assistant তৈরি করা এবং প্রয়োজন অনুযায়ী ভবিষ্যতে product ও technology expand করা। 🚀🤖";
+  }
+
+  // Creator interests / dream
+  if (
+    q.includes("dream") ||
+    q.includes("স্বপ্ন") ||
+    q.includes("কি হতে চায়")
+  ) {
+    return "Zakaria-এর dream হলো AI Hardware & Robotics Engineering-এর দিকে এগিয়ে যাওয়া এবং advanced AI ও robotics technology নিয়ে কাজ করা। 🚀🤖";
   }
 
   if (
@@ -16,128 +127,7 @@ function identityReply(question) {
     return "Zakaria-এর প্রধান interests হলো AI, robotics, programming, mathematics এবং physics। 🧠🤖";
   }
 
-  if (
-    q.includes("physical robot") ||
-    q.includes("robot control") ||
-    q.includes("robotics future") ||
-    q.includes("ভবিষ্যতে robot") ||
-    q.includes("রোবট control") ||
-    q.includes("রোবট নিয়ন্ত্রণ")
-  ) {
-    return "ভবিষ্যতে AQLYVEN AI-এর মাধ্যমে physical robots control ও operate করার লক্ষ্য রয়েছে। 🤖🐉";
-  }
-
-  if (
-    q.includes("creator role") ||
-    q.includes("founder") ||
-    q.includes("what does your creator do") ||
-    q.includes("তোমার creator কি করে")
-  ) {
-    return "Zakaria হলেন AQLYVEN AI-এর Founder & Creator। তিনি AI, robotics এবং technology নিয়ে কাজ করার লক্ষ্য রাখেন। 🤖🐉";
-  }
-
-  if (
-    q.includes("creator name") ||
-    q.includes("zakaria কে") ||
-    q.includes("জাকারিয়া কে") ||
-    q.includes("তোমার creator এর নাম")
-  ) {
-    return "আমার creator-এর নাম Zakaria। 🐉";
-  }
-
-  if (
-    q.includes("creator born") ||
-    q.includes("creator age") ||
-    q.includes("born") ||
-    q.includes("জন্ম") ||
-    q.includes("বয়স") ||
-    q.includes("age")
-  ) {
-    return "আমার creator Zakaria 2010 সালে জন্মেছেন এবং Bangladesh-এর। 🇧🇩";
-  }
-
-  if (
-    q.includes("who created you") ||
-    q.includes("who made you") ||
-    q === "creator" ||
-    q.includes("কে বানিয়েছে") ||
-    q.includes("কে তৈরি করেছে") ||
-    q.includes("তোমাকে কে বানিয়েছে")
-  ) {
-    return "আমার creator হলেন Zakaria — Bangladesh-এর একজন 2010-born Founder & Creator। 🇧🇩🐉";
-  }
-
-  if (
-    q.includes("who are you") ||
-    q.includes("তুমি কে") ||
-    q.includes("তোমার পরিচয়") ||
-    q.includes("what are you")
-  ) {
-    return "আমি AQLYVEN AI 🐉 — Zakaria-এর তৈরি একটি personal AI assistant.";
-  }
-
-  if (
-    q.includes("what is dragon ai") ||
-    q.includes("dragon ai কি") ||
-    q.includes("dragon ai কী") ||
-    q.includes("project goal") ||
-    q === "project"
-  ) {
-    return "AQLYVEN AI 🐉 হলো Zakaria-এর তৈরি personal AI assistant project.";
-  }
-
-  if (
-    q.includes("what can you do") ||
-    q.includes("কি করতে পার") ||
-    q.includes("কী করতে পার") ||
-    q.includes("capabilities") ||
-    q.includes("features")
-  ) {
-    return "আমি math solving, explanations, study help, reasoning এবং general questions-এ সাহায্য করতে পারি। 🧠🐉";
-  }
-
-  if (
-    q.includes("future vision") ||
-    q.includes("future plan") ||
-    q.includes("ভবিষ্যৎ পরিকল্পনা") ||
-    q === "ভবিষ্যৎ"
-  ) {
-    return "Zakaria-এর future vision হলো নিজের AI ও robotics technology এবং products তৈরি করা, এবং ভবিষ্যতে AQLYVEN AI-এর মাধ্যমে physical robots control করা। 🚀🤖";
-  }
-
-  if (
-    q.includes("language") ||
-    q.includes("কোন ভাষা") ||
-    q.includes("ভাষা") ||
-    q.includes("communication")
-  ) {
-    return "AQLYVEN AI Bangla, English এবং Banglish-এ communicate করতে পারে। 🌐🐉";
-  }
-
-  if (
-    q.includes("personality") ||
-    q.includes("স্বভাব") ||
-    q.includes("কেমন ai") ||
-    q.includes("how are you")
-  ) {
-    return "আমি friendly, helpful, clear এবং honest থাকার চেষ্টা করি। 🐉";
-  }
-
-  if (
-    q.includes("are you gpt") ||
-    q.includes("are you gemini") ||
-    q.includes("are you groq") ||
-    q.includes("gpt-4") ||
-    q.includes("gpt 4") ||
-    q.includes("gemini") ||
-    q.includes("groq") ||
-    q.includes("which ai") ||
-    q.includes("কোন ai") ||
-    q.includes("তুমি কি gpt")
-  ) {
-    return "আমি AQLYVEN AI 🐉। আমার পরিচয় AQLYVEN AI হিসেবেই। কোনো তথ্য সম্পর্কে নিশ্চিত না হলে আমি সেটা বানিয়ে বলব না।";
-  }
-
+  // Help
   if (
     q.includes("help") ||
     q.includes("সাহায্য") ||
@@ -145,6 +135,20 @@ function identityReply(question) {
     q.includes("support")
   ) {
     return "🆘 AQLYVEN Help Team\n\nসাহায্য বা কোনো সমস্যা জানাতে যোগাযোগ করুন:\n\n📞 +880 965 874 0781\n\nআমাদের Help Team আপনাকে প্রয়োজনীয় সহায়তা দেওয়ার জন্য প্রস্তুত। 🤝";
+  }
+
+  // Identity / provider transparency
+  if (
+    q.includes("are you gpt") ||
+    q.includes("are you gemini") ||
+    q.includes("are you groq") ||
+    q.includes("which ai") ||
+    q.includes("কোন ai") ||
+    q.includes("তুমি কি gpt") ||
+    q.includes("তুমি কি gemini") ||
+    q.includes("তুমি কি groq")
+  ) {
+    return "আমি AQLYVEN AI। আমার product identity হলো AQLYVEN। আমি প্রয়োজন অনুযায়ী বিভিন্ন AI technology ব্যবহার করতে পারি, কিন্তু নিশ্চিত নয় এমন তথ্য আমি বানিয়ে বলব না।";
   }
 
   return null;
