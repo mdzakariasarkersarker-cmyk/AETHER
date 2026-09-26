@@ -144,7 +144,7 @@ function identityReply(question) {
     q.includes("হেল্প") ||
     q.includes("support")
   ) {
-    return "🆘 AQLYVEN Help Line: +8809658740781";
+    return "🆘 AQLYVEN Help Team\n\nসাহায্য বা কোনো সমস্যা জানাতে যোগাযোগ করুন:\n\n📞 +880 965 874 0781\n\nআমাদের Help Team আপনাকে প্রয়োজনীয় সহায়তা দেওয়ার জন্য প্রস্তুত। 🤝";
   }
 
   return null;
