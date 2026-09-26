@@ -144,7 +144,7 @@ function identityReply(question) {
     q.includes("হেল্প") ||
     q.includes("support")
   ) {
-    return "🆘 AQLYVEN Help Line: 01861999585";
+    return "🆘 AQLYVEN Help Line: +8809658740781";
   }
 
   return null;
