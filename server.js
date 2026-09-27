@@ -28,6 +28,8 @@ const ai = new GoogleGenAI({
 
 app.use(express.json({limit:"10mb"}));
 
+app.set("trust proxy", 1);
+
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 
@@ -42,7 +44,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 30
   }
 }));
