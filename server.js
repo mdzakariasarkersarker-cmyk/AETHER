@@ -318,7 +318,13 @@ app.get("/auth/google", (req, res) => {
     prompt: "select_account"
   });
 
-  res.redirect(url);
+  req.session.save((err) => {
+    if (err) {
+      console.error("GOOGLE SESSION SAVE ERROR:", err.message);
+      return res.status(500).send("Google Login session error.");
+    }
+    res.redirect(url);
+  });
 });
 
 app.get("/auth/google/callback", async (req, res) => {
