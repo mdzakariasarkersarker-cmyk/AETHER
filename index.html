@@ -841,6 +841,18 @@ solve();
         style="width:100%;padding:13px;margin-bottom:14px;border-radius:10px;border:1px solid #29314a;background:#080b14;color:#fff">
 
       <button onclick="accountAction('login')" style="width:100%;padding:13px;border:0;border-radius:10px;font-weight:700;cursor:pointer">Login</button>
+
+      <div style="display:flex;align-items:center;gap:10px;margin:15px 0;color:#667085;font-size:12px">
+        <div style="height:1px;flex:1;background:#29314a"></div>
+        <span>OR</span>
+        <div style="height:1px;flex:1;background:#29314a"></div>
+      </div>
+
+      <button onclick="window.location.href='/auth/google'"
+        style="width:100%;padding:13px;border:1px solid #29314a;border-radius:10px;background:#fff;color:#111;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px">
+        <span style="font-size:18px;font-weight:800">G</span>
+        Continue with Google
+      </button>
       <button onclick="accountAction('register')" style="width:100%;padding:13px;margin-top:9px;border:1px solid #29314a;border-radius:10px;background:transparent;color:#fff;cursor:pointer">Create Account</button>
 
       <div id="accountMsg" style="text-align:center;min-height:20px;margin-top:14px;font-size:13px"></div>

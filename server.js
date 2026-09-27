@@ -295,6 +295,109 @@ app.post("/solve", solveLimiter, async (req, res) => {
 
 // ===== AQLYVEN USER ACCOUNT API =====
 const crypto = require("crypto");
+const { OAuth2Client } = require("google-auth-library");
+
+const googleOAuthClient = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_CALLBACK_URL
+);
+
+app.get("/auth/google", (req, res) => {
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_CALLBACK_URL) {
+    return res.status(500).send("Google Login is not configured.");
+  }
+
+  const state = crypto.randomBytes(32).toString("hex");
+  req.session.googleOAuthState = state;
+
+  const url = googleOAuthClient.generateAuthUrl({
+    access_type: "offline",
+    scope: ["openid", "email", "profile"],
+    state,
+    prompt: "select_account"
+  });
+
+  res.redirect(url);
+});
+
+app.get("/auth/google/callback", async (req, res) => {
+  try {
+    const { code, error, state } = req.query;
+
+    if (error || !code) {
+      return res.redirect("/?google_login=cancelled");
+    }
+
+    if (!state || state !== req.session.googleOAuthState) {
+      return res.status(400).send("Invalid Google login request.");
+    }
+
+    delete req.session.googleOAuthState;
+
+    const { tokens } = await googleOAuthClient.getToken(code);
+
+    if (!tokens.id_token) {
+      return res.redirect("/?google_login=failed");
+    }
+
+    const ticket = await googleOAuthClient.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+    const googleId = payload?.sub;
+    const email = payload?.email;
+    const name = payload?.name || email?.split("@")[0] || "Google User";
+
+    if (!googleId || !email) {
+      return res.redirect("/?google_login=failed");
+    }
+
+    const now = new Date().toISOString();
+
+    let user = db.prepare(
+      "SELECT id, username, plan, blocked FROM users WHERE google_id = ?"
+    ).get(googleId);
+
+    if (!user) {
+      user = db.prepare(
+        "SELECT id, username, plan, blocked FROM users WHERE email = ?"
+      ).get(email);
+    }
+
+    if (user?.blocked) {
+      return res.redirect("/?google_login=blocked");
+    }
+
+    if (user) {
+      db.prepare(
+        "UPDATE users SET google_id = ?, email = ?, last_seen = ? WHERE id = ?"
+      ).run(googleId, email, now, user.id);
+    } else {
+      const id = crypto.randomUUID();
+      const username = `google_${googleId.slice(0, 16)}`;
+
+      db.prepare(`
+        INSERT INTO users
+        (id, first_seen, last_seen, requests, plan, blocked, username, password_hash, google_id, email)
+        VALUES (?, ?, ?, 0, 'free', 0, ?, NULL, ?, ?)
+      `).run(id, now, now, username, googleId, email);
+
+      user = { id, username, plan: "free", blocked: 0 };
+    }
+
+    req.session.userId = user.id;
+    req.session.username = user.username;
+
+    res.redirect("/?google_login=success");
+  } catch (err) {
+    console.error("GOOGLE LOGIN ERROR:", err.message);
+    res.redirect("/?google_login=failed");
+  }
+});
+
 
 function hashPassword(password) {
   return crypto.scryptSync(password, "AQLYVEN-SALT-2026", 64).toString("hex");
