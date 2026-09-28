@@ -399,7 +399,14 @@ app.get("/auth/google/callback", async (req, res) => {
     req.session.userId = user.id;
     req.session.username = user.username;
 
-    res.redirect("/?google_login=success");
+    req.session.save((err) => {
+      if (err) {
+        console.error("GOOGLE SESSION SAVE ERROR:", err.message);
+        return res.redirect("/?google_login=failed");
+      }
+
+      res.redirect("/?google_login=success");
+    });
   } catch (err) {
     console.error("GOOGLE LOGIN ERROR:", err.message);
     res.redirect("/?google_login=failed");
