@@ -639,13 +639,20 @@ body{overflow:hidden}
 </div>
 
 <script>
+let aqlyvenAccountKey="guest";
+
+function getAQLYVENHistoryKey(){
+  return "aqlyvenHistory:" + encodeURIComponent(aqlyvenAccountKey);
+}
+
 function saveCurrentConversation(){
   if(!chatHistory.length) return;
 
   const firstUser=chatHistory.find(x=>x.role==="user");
   const title=firstUser ? firstUser.content.slice(0,45) : "New conversation";
 
-  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
+  const key=getAQLYVENHistoryKey();
+  const history=JSON.parse(localStorage.getItem(key) || "[]");
 
   history.push({
     title:title,
@@ -653,12 +660,15 @@ function saveCurrentConversation(){
     time:Date.now()
   });
 
-  localStorage.setItem("aqlyvenHistory",JSON.stringify(history.slice(-30)));
+  localStorage.setItem(key,JSON.stringify(history.slice(-30)));
   renderDragonHistory();
 }
 
 function saveDragonHistory(){
-  localStorage.setItem("aqlyvenHistory", JSON.stringify(chatHistory));
+  localStorage.setItem(
+    getAQLYVENHistoryKey(),
+    JSON.stringify(chatHistory)
+  );
   renderDragonHistory();
 }
 
@@ -666,7 +676,9 @@ function renderDragonHistory(){
   const list=document.getElementById("historyList");
   if(!list) return;
 
-  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
+  const history=JSON.parse(
+    localStorage.getItem(getAQLYVENHistoryKey()) || "[]"
+  );
 
   if(!history.length){
     list.innerHTML='<div class="empty-history">No conversations yet</div>';
@@ -689,7 +701,10 @@ function escapeHistoryText(text){
 }
 
 function loadHistory(index){
-  const history=JSON.parse(localStorage.getItem("aqlyvenHistory") || "[]");
+  const history=JSON.parse(
+    localStorage.getItem(getAQLYVENHistoryKey()) || "[]"
+  );
+
   const item=history[index];
   if(!item) return;
 
@@ -701,8 +716,6 @@ function loadHistory(index){
 
   toggleSidebar();
 }
-
-renderDragonHistory();
 
 function toggleSidebar(){
   const sidebar=document.getElementById("sidebar");
@@ -865,6 +878,36 @@ solve();
 </div>
 
 <script>
+async function loadAccountStatus(){
+  try{
+    const r=await fetch("/api/me",{credentials:"same-origin"});
+    const data=await r.json();
+
+    const name=document.getElementById("profileName");
+    const status=document.getElementById("profileStatus");
+
+    if(data.loggedIn){
+      aqlyvenAccountKey = String(data.id || data.username || "guest");
+
+      if(name) name.textContent=data.username || "AQLYVEN User";
+      if(status) status.textContent=(data.plan || "free").toUpperCase()+" PLAN";
+
+      renderDragonHistory();
+    }else{
+      aqlyvenAccountKey = "guest";
+
+      if(name) name.textContent="Login / Sign up";
+      if(status) status.textContent="AQLYVEN Account";
+
+      renderDragonHistory();
+    }
+  }catch(e){
+    console.error("ACCOUNT STATUS ERROR:",e);
+  }
+}
+
+loadAccountStatus();
+
 function openAccount(){
   document.getElementById("accountModal").style.display="flex";
 }
